@@ -19,7 +19,7 @@ Um jogo de cartas de humor ácido para jogar com a galera: a carta preta aparece
 
 ## Destaques
 
-- **60 perguntas e 250 respostas**, escritas do zero em português com referências brasileiras: coach quântico, golpe do Pix, motorista de aplicativo filósofo, Orkut, Mercúrio retrógrado e mais.
+- **60 perguntas e 295 respostas**, escritas do zero em português com referências brasileiras: coach quântico, golpe do Pix, motorista de aplicativo filósofo, Orkut, Mercúrio retrógrado e mais.
 - **Três níveis de acidez**, que ligam e desligam: Morno, Ácido e Sem perdão. O Sem perdão começa desligado.
 - **Cartas da turma:** campos para escrever perguntas e respostas próprias, com as piadas internas do grupo. Elas ficam salvas só no aparelho que abriu a sala.
 - **Modo de nomes:**
