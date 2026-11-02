@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0D0C0C">
+<title>B.D.S.M.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;800;900&display=swap">
+<script>
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDR1-ErWba086v6k3J7VW5V4Zi0C9Wg5c0",
+  authDomain: "amigos-da-onca-ed09f.firebaseapp.com",
+  databaseURL: "https://amigos-da-onca-ed09f-default-rtdb.firebaseio.com",
+  projectId: "amigos-da-onca-ed09f",
+  storageBucket: "amigos-da-onca-ed09f.firebasestorage.app",
+  messagingSenderId: "589886119513",
+  appId: "1:589886119513:web:d3c91b7e4c10d36be3db48"
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-app-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-database-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* Baralho base. Prefixo: M = Morno, A = Ácido, S = Sem perdão. "___" marca cada lacuna. */
+window.BARALHO = {
+pretas: [
+"M|Nova regra do condomínio: é proibido ___ depois das 22h.",
+"M|O que o meu avô esconde no fundo do guarda-roupa? ___.",
+"M|O coach quântico garante: em 7 dias, ___ vai mudar a sua vida.",
+"M|Urgente: o governo anuncia ___ para combater a inflação.",
+"M|O que a NASA encontrou em Marte? ___.",
+"M|Grupo da família, 6h da manhã: \"Bom dia! Compartilhem: ___\".",
+"M|O pastor do Instagram jura que ___ cura qualquer coisa.",
+"M|Trailer do novo filme nacional: \"Antes ele era só um homem. Agora ele é ___.\"",
+"M|O verdadeiro segredo da receita da vó: ___.",
+"M|Bio do meu Tinder: \"Gosto de viajar, comer bem e ___.\"",
+"M|Novo esporte olímpico: ___.",
+"M|A Faria Lima lançou um aplicativo de ___.",
+"M|Horóscopo de hoje: \"Cuidado com ___ e evite ___.\"",
+"M|Os alienígenas chegaram, e a primeira coisa que pediram foi ___.",
+"M|O segredo da vida eterna, segundo um bilionário: ___.",
+"M|Quadro novo do domingo à tarde: \"___ ou ___?\"",
+"A|No meu velório, quero ___ tocando no fundo.",
+"A|Meu terapeuta pediu demissão depois que eu contei sobre ___.",
+"A|___: o verdadeiro motivo do meu divórcio.",
+"A|Promoção do Atacadão: leve ___ e ganhe ___.",
+"A|Fui demitido por ___ na reunião do Teams.",
+"A|A CPI descobriu que o dinheiro foi gasto em ___.",
+"A|O apocalipse zumbi começou com ___.",
+"A|Minha última pesquisa no Google: \"como esconder ___ da minha mãe\".",
+"A|O que tem no porão do síndico? ___.",
+"A|Aqui jaz uma vítima de ___.",
+"S|Fui expulso do velório da minha própria avó por causa de ___.",
+"S|O que eu achei na gaveta do meu pai depois que ele morreu? ___.",
+"S|A fantasia sexual secreta do síndico: ___.",
+"S|O Samu chegou e encontrou ___.",
+"M|O novo slogan da campanha: \"Vote em mim, eu prometo ___.\"",
+"A|O vereador gastou a verba da merenda em ___.",
+"M|O milagre que o pastor promete nesta quarta-feira: ___.",
+"A|A penitência que o padre me deu depois da confissão: ___.",
+"M|O que eu quero gravado na minha lápide: ___.",
+"A|Meu plano funerário cobre ___, mas não cobre ___.",
+"A|O ditador do país vizinho declarou guerra por causa de ___.",
+"M|O áudio que a tia jura ser da NASA: \"___ vai acabar com o mundo amanhã.\"",
+"A|Primeira lei da nova seita: ___.",
+"A|O novo plano dos bilionários para salvar o planeta: ___.",
+"M|O golpe do Pix evoluiu: agora eles mandam ___.",
+"A|Fui preso na fronteira com o Paraguai carregando ___.",
+"A|O delegado não acreditou quando eu disse que ___ era para uso pessoal.",
+"A|Meu chefe chamou de \"oportunidade de crescimento\" ___.",
+"A|Motivo da minha justa causa: ___.",
+"A|No home office, ninguém sabe que eu estou com ___ durante a reunião.",
+"A|O agiota aceitou ___ como pagamento.",
+"A|O que estragou a ceia de Natal deste ano? ___.",
+"M|Diagnóstico do Dr. Google: ___.",
+"M|Assunto do momento no Twitter: ___.",
+"M|Legenda perfeita para o Instagram: \"___ #gratidão\".",
+"M|A ressaca de hoje foi patrocinada por ___.",
+"A|Ontem eu bebi ___ e acordei com ___.",
+"M|No meu tempo a gente não tinha ___, e era feliz.",
+"M|Reviravolta no último capítulo: a vilã era ___ o tempo todo.",
+"M|O paredão desta semana é entre ___ e ___.",
+"M|O prato mais caro do restaurante gourmet: ___ desconstruído.",
+"M|O motorista virou para trás e disse: \"A vida, meu amigo, é igual a ___.\"",
+"M|Mercúrio retrógrado é o culpado por ___.",
+"A|O meu signo explica ___."
+],
+brancas: [
+"M|Um consórcio de caixões.","M|A carteira de trabalho em formato de NFT.","M|O cheiro do metrô às 18h.","M|O INSS negando a minha morte.",
+"M|Um pastor vendendo terreno no céu em 12x sem juros.","M|Um robô aspirador com depressão.","M|Um bilionário que foi ao espaço e esqueceu de voltar.",
+"M|O grupo de WhatsApp dos meus ex.","M|Um gnomo fiscal da Receita Federal.","M|Um tamagotchi falecido.","M|Um padre fazendo live de videogame.",
+"M|Lamber a catraca do ônibus.","M|Uma mãe que acabou de descobrir o Pix.","M|O cachorro que herdou a casa toda.","M|Um testamento escrito só com emojis.",
+"M|Uma vaquinha online para pagar o agiota.","M|Um terraplanista caindo da borda.","M|Um porta-malas cheio de pinguins.","M|Pagar promessa de joelhos até o Detran.",
+"M|Uma lápide com QR Code.","M|Um extintor vencido e muita esperança.","M|Um coach que fica rico vendendo curso de como ficar rico.",
+"M|Um anão de jardim com ficha criminal.","M|O Fusca do apocalipse.",
+"A|O tio do pavê numa festa de swing.","A|Um ménage à trois com o Serasa.","A|Uma lipoaspiração feita no açougue.","A|Um influencer de colonoscopia.",
+"A|Peidar no elevador e culpar o bebê.","A|Um vibrador com Bluetooth que conectou no som do vizinho.","A|Cremar a vó e confundir com o tempero.",
+"A|Um velório open bar.","A|Uma suruba de contadores em pleno prazo do imposto de renda.","A|Um Uber que só aceita pagamento em rim.",
+"A|Leilão dos órgãos da família no Mercado Livre.","A|Uma conta de fotos de pé de tiozão.","A|Ser abduzido e devolvido sem os rins.",
+"A|Uma colonoscopia ao vivo no Instagram.","A|Fazer xixi na piscina olímpica.","A|Um deputado chorando abraçado a um cofre.",
+"A|Um enterro patrocinado por casa de apostas.","A|A sogra pelada no grupo da família, por engano.","A|Dois litros de Corote e um sonho.",
+"A|Um tatuador bêbado e uma palavra em chinês.","A|Uma placenta no freezer, ao lado do sorvete.","A|Um defunto sorrindo no caixão.",
+"A|Sexo selvagem com a porta da geladeira aberta.","A|Um travesseiro de corpo inteiro do meu ex.","A|Uma diarreia no meio do show.","A|A meia suada do pastor.",
+"S|Uma orgia no asilo com Viagra vencido.","S|Um velório com stripper contratado pelo próprio defunto.","S|Transar no carro funerário.",
+"S|Uma DR no meio do enterro.","S|Um teste de gravidez positivo no amigo secreto da firma.","S|O áudio de 7 minutos do meu pai detalhando o exame de próstata.",
+"S|Descobrir que o vovô tinha uma segunda família no Paraguai.","S|Um fetiche por boleto vencido.","S|A cueca freada do noivo no altar.",
+"S|Herdar só as dívidas e um papagaio que xinga a família.","S|Uma vasectomia feita pelo cunhado.","S|O nude do pastor vazado no grupo da igreja.",
+"S|Vomitar dentro do capacete do motoboy.","S|Doar o corpo para a ciência e a ciência devolver.","S|Pegar herpes na festa da firma.",
+"S|Um swing com os vizinhos que acabou em processo.","S|A urna do vovô sendo usada de cinzeiro.","S|Um amante escondido no guarda-roupa desde 2019.",
+"S|Toalhas de motel como lembrancinha de casamento.","S|Uma planilha contando os dias para a sogra morrer.","S|Um exame de fezes enviado no grupo errado.",
+"S|Um ménage com o síndico e o porteiro.","S|Acordar no meio do próprio velório e pedir o Pix das flores de volta.","S|Um vibrador entalado e a equipe do Samu rindo.",
+"S|Um enema de café com chantilly.",
+"M|Um deputado votando de pijama na sessão online.","A|Uma emenda parlamentar para reformar a piscina do vereador.","M|O horário eleitoral com jingle de pagode.",
+"A|Um candidato que beija o bebê e rouba a chupeta.","M|Uma CPI que termina em pizza de verdade, com borda recheada.","A|Uma rachadinha no amigo secreto da família.",
+"S|Um político prometendo metrô até a casa da amante.","A|Um laranja que acabou de descobrir que é laranja.","A|Um político condenado com tornozeleira de grife.",
+"M|A fila do INSS chegando à terceira geração.",
+"A|Um culto com maquininha de cartão no altar.","M|O dízimo parcelado em 12x no crédito.","M|Um padre confinado num reality show.",
+"A|Um pastor curando calvície com azeite da promoção.","M|Água benta com gosto de cloro de piscina.","M|Uma promessa paga com Pix agendado.",
+"A|Um anjo da guarda pedindo demissão.","A|O Juízo Final transmitido com patrocínio de casa de apostas.","M|Uma romaria até a lotérica.",
+"S|A confissão que fez o padre pedir transferência de paróquia.",
+"M|Um velório com o Wi-Fi melhor que o de casa.","A|Morrer justo no dia do pagamento.","A|Um caixão de papelão comprado na Shopee.",
+"A|Ser enterrado com o celular, e ele tocar no meio da missa.","S|Uma herança disputada no grito em cima do caixão.","A|Um médium cobrando a consulta do defunto.",
+"M|Um plano funerário com cashback.","M|Ler o próprio obituário com erro de português.","M|Um fantasma que só assombra a conta de luz.",
+"S|A Morte também esperando na fila do SUS.",
+"S|Um botão vermelho de míssil nuclear ao lado do controle da TV.","A|Uma seita que cultua o algoritmo do TikTok.",
+"M|Um ditador que exige ser chamado de \"meu rei\" no grupo do condomínio.","M|Um bunker anti-apocalipse com estoque só de miojo.",
+"M|Uma corrente de WhatsApp que explode o celular se não for repassada.","A|Um guru de seita que aceita cartão de crédito.",
+"M|O fim do mundo remarcado por falta de quórum.","A|Uma guerra nuclear começada por um emoji errado.",
+"M|Um bunker de bilionário com Wi-Fi ruim.","A|Um bilionário dono de rede social brigando com um adolescente às 3 da manhã.",
+"A|Um iate do tamanho de um bairro, ancorado em cima de um recife de coral.","A|O último urso polar fazendo publi de ar-condicionado.",
+"M|Uma pirâmide financeira de pastel de feira.","M|Um mafioso italiano tentando entender o boleto.","M|Um aquecimento global que chegou primeiro em Cuiabá.",
+"M|Um assaltante que pediu o Pix e esqueceu o celular com a vítima.","M|Um contrabandista do Paraguai com nota fiscal.","M|Lavar dinheiro numa lavanderia de verdade.",
+"A|Um traficante que aceita vale-refeição.","A|Um gato de TV a cabo puxado da casa do delegado.","M|Um DVD pirata do próprio casamento.",
+"A|Sonegar imposto declarando o cachorro como dependente.","A|Um sequestrador que aceita o resgate em 10x sem juros.","M|O tráfico de influência do síndico.",
+"S|Um ladrão de fio de cobre eletrocutado ao vivo no jornal.","M|Um laranja tão laranja que virou suco.","M|Um advogado de porta de cadeia com MBA.",
+"A|Um estágio não remunerado de 70 horas por semana.","M|Uma reunião de alinhamento sobre a próxima reunião.","M|Um chefe que manda áudio no domingo às 23h.",
+"M|Uma confraternização da firma com amigo secreto de R$ 10.","A|Um RH que demite com emoji de coração.","A|Pedir demissão por e-mail com cópia para a empresa inteira.",
+"A|Um \"somos uma família\" seguido de corte de 30% no salário.","A|Câmera desligada e calça também.","M|Um vale-refeição que só passa na padaria do chefe.",
+"M|Investir tudo em cripto de figurinha da Copa.","M|Um agiota com programa de fidelidade.","A|O nome no Serasa desde antes de nascer.",
+"M|Um golpista que caiu no golpe de outro golpista.","M|Um cartão de crédito com limite emocional.","A|Vender um rim para pagar o rodízio de sushi.",
+"A|Um coach financeiro devendo para a própria mãe.",
+"A|A tia do zap jurando que o arroz agora é feito na China.","A|O amigo secreto da família virando processo judicial.",
+"A|Um plano de saúde que só cobre doença que não existe.","M|Uma IA terapeuta afastada por burnout.","M|Um juiz que marcou pênalti por intuição espiritual.",
+"A|Um TCC inteiro feito no ChatGPT, inclusive a dedicatória.",
+"M|Um influencer cancelado por um tuíte de 2011.","M|Uma treta no Twitter que terminou em casamento.","M|O Twitter que todo mundo se recusa a chamar de X.",
+"A|Um filtro do Instagram que apaga a dívida do rosto.","A|Postar o próprio velório nos stories.","A|Um perfil fake no Instagram só para vigiar o ex.",
+"M|Um vídeo de academia às 5 da manhã, com legenda de superação.","M|Ser bloqueado pela própria mãe no Instagram.",
+"A|Um fio de 40 tuítes sobre como ficar rico, escrito por quem mora com a mãe.",
+"M|Um Engov tomado com cachaça.","A|A mensagem das 3 da manhã para o ex.","A|Acordar abraçado com o vaso sanitário.","M|\"Nunca mais eu bebo\", pela quarta vez no mês.",
+"A|Uma caipirinha feita com álcool de posto.","M|O tio que bebe dois copos e vira coach.","A|Acordar em Guarulhos sem lembrar como.",
+"A|Vomitar no Uber e pagar a taxa de limpeza em 3x.","M|Um open bar de casamento que acabou às 23h.","M|Beber água entre um copo e outro, só no discurso.",
+"A|A ressaca moral de um áudio de 6 minutos no grupo da família.","M|Um copo de cerveja quente esquecido no sol.","A|Uma tatuagem feita às 4 da manhã.",
+"A|Perder o celular, a chave e a dignidade na mesma noite.",
+"M|Um depoimento no Orkut que ninguém aprovou.","M|Ficar \"ausente\" no MSN para fazer charme.","M|Uma fita VHS rebobinada com a caneta Bic.",
+"M|Um Tamagotchi que morreu durante a aula.","M|Lan house às 2 da manhã, com Counter-Strike e salgadinho.","M|O barulho da internet discada acordando a casa toda.",
+"M|Um CD gravado com 15 músicas \"de amor\" para a crush.","M|Entrar na comunidade \"Eu odeio acordar cedo\".",
+"A|Um boomer dizendo que na época dele se aprendia apanhando.","A|Um tiozão contando que comprou casa com salário de estagiário.",
+"M|Um boomer pedindo para o neto \"entrar no Google\" para ele.","M|Um áudio do pai começando com \"Alô? Tá gravando?\".",
+"M|O avô que acha que o ChatGPT é uma pessoa presa no computador.","M|Uma corrente de e-mail que prometia sete anos de azar.",
+"M|Assoprar o cartucho do videogame.","A|Um boomer que acha que depressão se cura com enxada.",
+"M|Uma vilã que sobreviveu a três explosões.","M|O gêmeo malvado que aparece no capítulo final.","M|Um tapa na cara em câmera lenta, com trilha dramática.",
+"M|Uma amnésia conveniente bem na hora do casamento.","A|Um teste de DNA lido em voz alta no velório.","M|A mocinha que sofreu 200 capítulos para casar em 5 minutos.",
+"M|Um participante chorando no confessionário por causa de um pão.","M|Uma prova de resistência de 30 horas abraçado a um poste.",
+"A|Um participante cancelado antes do primeiro paredão.","A|Uma edição que transformou um \"bom dia\" em barraco.","A|Um casal formado e desfeito na mesma festa do reality.",
+"M|O apresentador fazendo um discurso de eliminação de 20 minutos.","A|Um ex-participante de reality vendendo chá emagrecedor.","M|Votar 4 mil vezes para tirar alguém do programa.",
+"M|Um hambúrguer gourmet de R$ 89 que não enche a boca.","M|Uma espuma de nada, servida numa telha.","M|A vó que não aceita \"estou sem fome\" como resposta.",
+"M|O tio que estraga o churrasco dizendo que carne boa não precisa de sal.","A|Um sushi de posto de gasolina.","M|Um pastel de vento: 90% ar e 10% esperança.",
+"M|Arroz com uva-passa no Natal, o crime que ninguém pune.","M|Um miojo gourmetizado por um chef francês.","M|Um prato que o garçom descreveu por cinco minutos e cabe numa colher.",
+"A|A marmita de peixe esquentada no micro-ondas da firma.","M|Um rodízio de pizza com 40 sabores doces.","M|Um buffet por quilo pesado com a mão do atendente junto.",
+"A|Uma intoxicação alimentar no casamento do primo.","M|Uma coxinha de frango sem frango.",
+"M|Um motorista explicando a crise do Oriente Médio em 15 minutos.","M|Um motorista que é ex-engenheiro, ex-coach e futuro deputado.",
+"M|Uma bala de menta oferecida junto com um sermão sobre a vida.","A|Um motorista que jura que o GPS é uma conspiração.","M|Uma corrida de 10 minutos que virou sessão de terapia.",
+"M|Louvor no volume máximo às 6 da manhã.","M|Um motorista que cancela depois de 15 minutos parado na porta.","M|Dar 5 estrelas por medo do motorista.",
+"M|Um motorista com um plano secreto para acabar com o trânsito.","A|O motorista contando os detalhes do próprio divórcio.","M|Um carro com aromatizante de pinho e cheiro de cigarro.",
+"M|Uma \"rota alternativa\" que passou por três municípios.",
+"M|Mercúrio retrógrado.","M|Um mapa astral que explicou por que eu devo para o agiota.","A|Culpar o ascendente em escorpião pela traição.",
+"M|Um geminiano com duas personalidades e nenhuma decisão.","M|Um signo incompatível com o boleto.","M|Uma astróloga cobrando no Pix para ler a lua.",
+"M|Uma lua em câncer chorando com comercial de margarina.","M|Um leonino que posta foto no espelho todo dia.","A|Terminar o namoro porque o horóscopo mandou.",
+"M|Um virginiano organizando a gaveta de meias por cor.","A|Um capricorniano que planejou o próprio velório em planilha.","M|Um sagitariano sumido há três semanas, viajando.",
+"M|O céu inteiro conspirando contra a minha conta bancária.","A|Um escorpiano guardando print de 2014.",
+"M|Um ornitorrinco: mamífero que bota ovo, tem bico de pato, esporão venenoso e brilha no escuro sob luz ultravioleta.",
+"M|Um vombate, o bicho que faz cocô em formato de cubo.","M|Um polvo com três corações, sangue azul e mais inteligência que o meu chefe."
+]};
+
+</script>
+<style>
+/* Layout: mesa escura de carteado. A carta preta é o palco; as brancas são o elenco. Magenta só onde há ação ou vitória. */
+:root{
+  --mesa:#0D0C0C; --mesa-2:#191717; --mesa-3:#252222; --linha:rgba(245,242,234,.14);
+  --branca:#F5F2EA; --tinta:#111; --suave:#A8A29A; --quente:#FF2E7E; --quente-esc:#C8125A; --ok:#5BD69A;
+  --f-sigla:"Anton","Impact","Arial Narrow Bold",sans-serif;
+  --f-texto:"Archivo","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html,body{background:var(--mesa);color:var(--branca)}
+body{margin:0;font-family:var(--f-texto);font-size:16px;line-height:1.4}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--quente);outline-offset:2px}
+[hidden]{display:none!important}
+
+.app{max-width:1320px;margin-inline:auto;padding-inline:16px;padding-block:14px 40px;display:grid;gap:22px}
+.app.fone{max-width:560px}
+@media (min-width:1000px){.app.tv-jogo{grid-template-columns:minmax(0,1fr) 300px;align-items:start}.app.tv-jogo .topo{grid-column:1/-1}}
+.topo{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 18px;padding-bottom:12px;border-bottom:1px solid var(--linha)}
+.marca{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.sigla{font-family:var(--f-sigla);font-weight:400;font-size:clamp(34px,6vw,58px);line-height:.9;letter-spacing:.02em}
+.sigla i{font-style:normal;color:var(--quente)}
+.extenso{font-size:14px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--suave)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--linha);border-radius:999px;padding:4px 10px;color:var(--suave);white-space:nowrap}
+.chip.quente{color:var(--quente);border-color:var(--quente)}
+.chip.ok{color:var(--ok);border-color:var(--ok)}
+.bloco{display:grid;gap:12px;min-width:0}
+.rotulo{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--suave)}
+.nota{font-size:14px;color:var(--suave);max-width:66ch}
+.chamada{font-family:var(--f-sigla);font-weight:400;font-size:clamp(28px,4vw,44px);line-height:1.02;letter-spacing:.01em;text-wrap:balance}
+.painel{background:var(--mesa-2);border:1px solid var(--linha);border-radius:14px;padding:16px;display:grid;gap:12px;min-width:0}
+
+.btn{background:var(--quente);color:#fff;border:0;border-radius:10px;font-weight:900;font-size:16px;padding:12px 18px;min-height:48px;letter-spacing:.01em}
+.btn.sec{background:transparent;color:var(--branca);border:1.5px solid var(--linha)}
+.btn.mini{font-size:13px;padding:6px 11px;min-height:34px;border-radius:8px}
+.btn.claro{background:var(--branca);color:var(--tinta)}
+.btn.largo{width:100%}
+.btn:disabled{opacity:.38;cursor:not-allowed}
+.acoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{background:transparent;border:1.5px solid var(--linha);border-radius:999px;padding:7px 13px;font-weight:800;font-size:14px;min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--branca);color:var(--tinta);border-color:var(--branca)}
+.ajustes{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+input[type=text],textarea{background:var(--mesa-2);border:1.5px solid var(--linha);border-radius:10px;padding:10px 12px;min-height:46px;width:100%;min-width:0}
+textarea{min-height:120px;resize:vertical;line-height:1.45}
+.linha-form{display:flex;gap:8px;flex-wrap:wrap}
+.linha-form input{flex:1 1 180px}
+
+/* Entrada */
+.entrada{display:grid;gap:18px;grid-template-columns:auto minmax(0,1fr);align-items:center;background:var(--mesa-2);border-radius:14px;padding:16px}
+@media (max-width:620px){.entrada{grid-template-columns:minmax(0,1fr)}}
+.qr{background:#fff;padding:10px;border-radius:10px;width:max-content}
+.qr img,.qr canvas{display:block;width:180px;height:180px}
+.codigo{font-family:var(--f-sigla);font-size:clamp(44px,7vw,68px);line-height:1;letter-spacing:.08em;color:var(--quente)}
+.endereco{font-size:13px;color:var(--suave);overflow-wrap:anywhere}
+.pessoas{display:flex;flex-wrap:wrap;gap:8px}
+.pessoa{display:flex;align-items:center;gap:6px;background:var(--mesa-3);border-radius:999px;padding:6px 6px 6px 14px;font-weight:800}
+.pessoa.pronto{background:var(--branca);color:var(--tinta)}
+.pessoa.espera{opacity:.55}
+.pessoa .x{background:transparent;border:0;color:var(--suave);font-weight:800;font-size:13px;padding:4px 8px}
+.pessoa .tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--quente);color:#fff;border-radius:999px;padding:2px 7px}
+
+/* Cartas */
+.preta{background:#000;color:#fff;border:2px solid #fff;border-radius:18px;padding:clamp(20px,3vw,34px);display:grid;gap:18px;min-height:220px;align-content:space-between;box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.preta .t{font-weight:900;font-size:clamp(26px,3.6vw,46px);line-height:1.12;text-wrap:balance}
+.preta .rod{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#aaa}
+.lacuna{display:inline-block;min-width:3.4em;border-bottom:.12em solid currentColor;margin:0 .08em;transform:translateY(-.08em)}
+.fone .preta{min-height:0;border-radius:14px}
+.fone .preta .t{font-size:clamp(21px,6vw,28px)}
+mark{background:none;color:var(--quente);font-weight:900}
+.preta mark{color:var(--quente)}
+
+.respostas{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.resposta{background:var(--branca);color:var(--tinta);border-radius:14px;padding:16px 16px 14px;display:grid;gap:10px;align-content:space-between;min-height:140px;border:3px solid transparent;text-align:left;animation:entra .45s ease-out both}
+.resposta .frase{font-weight:800;font-size:clamp(17px,1.6vw,21px);line-height:1.22}
+.resposta .frase mark{color:var(--quente-esc)}
+.resposta .letra{font-family:var(--f-sigla);font-size:22px;color:#777;line-height:1}
+.resposta.venceu{border-color:var(--quente);box-shadow:0 0 0 4px rgba(255,46,126,.25)}
+.resposta.perdeu{opacity:.32}
+.resposta .dono{font-size:13px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--quente-esc)}
+@keyframes entra{from{opacity:0;transform:translateY(14px) rotate(-2deg)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.resposta{animation:none}}
+.fone .resposta{animation:none}
+.resposta:disabled{opacity:.4;cursor:not-allowed}
+button.resposta{cursor:pointer;font:inherit}
+button.resposta[aria-pressed="true"]{border-color:var(--quente)}
+.vitoria{display:grid;gap:10px}
+.vitoria .quem{font-family:var(--f-sigla);font-size:clamp(30px,4vw,48px);color:var(--quente);line-height:1}
+
+/* Mão */
+.mao{display:grid;gap:8px}
+.carta-mao{position:relative;background:var(--branca);color:var(--tinta);border-radius:12px;padding:13px 44px 13px 14px;font-weight:800;font-size:16.5px;line-height:1.25;text-align:left;border:3px solid transparent;min-height:56px}
+.carta-mao[aria-pressed="true"]{border-color:var(--quente)}
+.carta-mao .n{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--quente);color:#fff;font-weight:900;display:grid;place-items:center;font-size:14px}
+.carta-mao.descartar{opacity:.45;text-decoration:line-through;border-color:#999}
+.previa{background:var(--mesa-2);border-radius:12px;padding:14px;font-weight:800;font-size:17px;line-height:1.3}
+
+/* Placar */
+.placar li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--linha);font-weight:800}
+.placar li b{font-family:var(--f-sigla);font-weight:400;font-size:22px;color:var(--quente)}
+.placar li.lider span{color:var(--quente)}
+.momentos li{padding:10px 0;border-top:1px solid var(--linha);display:grid;gap:4px}
+.momentos .frase{font-weight:800}
+.momentos .frase mark{color:var(--quente)}
+.momentos .de{font-size:13px;color:var(--suave);font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.podio{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.podio div{background:var(--mesa-2);border-radius:14px;padding:16px;display:grid;gap:4px}
+.podio div:first-child{background:var(--quente);color:#fff}
+.podio .pos{font-family:var(--f-sigla);font-size:40px;line-height:1}
+.podio .nm{font-weight:900;font-size:20px;overflow-wrap:anywhere}
+.aviso{background:var(--mesa-2);border-left:4px solid var(--quente);border-radius:8px;padding:12px 14px;font-size:14.5px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+(function(){
+"use strict";
+
+/* ---------------- nomes do jogo ---------------- */
+const TITULOS={
+  bdsm:{s:'B<i>.</i>D<i>.</i>S<i>.</i>M<i>.</i>',n:"Baralho Desgraçado Sem Moral",txt:"B.D.S.M."},
+  puta:{s:'P<i>.</i>U<i>.</i>T<i>.</i>A<i>.</i>',n:"Piadas Ultrajantes, Totalmente Absurdas",txt:"P.U.T.A."}
+};
+const NIVEIS={M:"Morno",A:"Ácido",S:"Sem perdão",T:"Da turma"};
+const MAO=10, TROCA_MAX=7, TROCA_CADA=5;
+
+/* ---------------- utilidades ---------------- */
+const $=s=>document.querySelector(s);
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const sorte=n=>Math.floor(Math.random()*n);
+const embaralha=a=>{for(let i=a.length-1;i>0;i--){const j=sorte(i+1);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const novoId=()=>Math.random().toString(36).slice(2,10);
+const lista=n=>n.length<2?n.join(""):n.slice(0,-1).join(", ")+" e "+n[n.length-1];
+const pl=(n,um,v)=>n+" "+(n===1?um:v);
+const guardar=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+const abrir=k=>{try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e){return null;}};
+const arr=v=>Array.isArray(v)?v:(v&&typeof v==="object"?Object.keys(v).sort((a,b)=>a-b).map(k=>v[k]):[]);
+function novoCodigo(){const L="BCDFGHJKLMNPQRSTVWXZ";let c="";for(let i=0;i<4;i++)c+=L[sorte(L.length)];return c;}
+const lacunas=t=>Math.max(1,t.split("___").length-1);
+
+/* encaixa as respostas nas lacunas */
+function ajustar(resp,antes){
+  let r=resp.trim().replace(/\.$/,"");
+  const fim=antes.replace(/\s+$/,"");
+  const inicioFrase=!fim||/[.?!"“:]$/.test(fim)&&!/:$/.test(fim)||/"$/.test(fim);
+  const prim=r.split(" ")[0]||"";
+  if(!inicioFrase&&/^[A-ZÁÉÍÓÚÂÊÔÃÕÇ][a-záéíóúâêôãõç-]*,?$/.test(prim)&&["Mercúrio"].indexOf(prim)<0) r=r[0].toLowerCase()+r.slice(1);
+  return r;
+}
+function preencher(preta,textos,marcar){
+  const partes=preta.split("___"); let h="";
+  partes.forEach((p,i)=>{
+    h+=esc(p);
+    if(i<partes.length-1){
+      const t=textos&&textos[i];
+      h+=t!=null?(marcar===false?esc(ajustar(t,partes.slice(0,i+1).join(""))):'<mark>'+esc(ajustar(t,partes.slice(0,i+1).join("")))+'</mark>'):'<span class="lacuna"></span>';
+    }
+  });
+  return h;
+}
+
+/* ---------------- rede ---------------- */
+const CFG=window.FIREBASE_CONFIG||{};
+const temFirebase=!!(CFG.databaseURL&&window.firebase&&firebase.database);
+const clone=v=>v==null?null:JSON.parse(JSON.stringify(v));
+function redeFirebase(){
+  firebase.initializeApp(CFG); const db=firebase.database();
+  const r={tipo:"firebase",conectado:false,
+    ouvir(p,cb){const ref=db.ref(p),f=s=>cb(s.val());ref.on("value",f);return()=>ref.off("value",f);},
+    set(p,v){return db.ref(p).set(v);},update(p,o){return db.ref(p).update(o);},remove(p){return db.ref(p).remove();}};
+  db.ref(".info/connected").on("value",s=>{r.conectado=!!s.val();desenhar();});
+  return r;
+}
+function redeLocal(){
+  const KEY="bdsm-rede-local",ouv=[];let bc=null;try{bc=new BroadcastChannel("bdsm");}catch(e){}
+  const ler=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){return {};}};
+  const pegar=(db,p)=>p.split("/").reduce((o,k)=>o&&o[k]!==undefined?o[k]:null,db);
+  const por=(db,p,v)=>{const ks=p.split("/");let o=db;for(let i=0;i<ks.length-1;i++){if(typeof o[ks[i]]!=="object"||o[ks[i]]===null)o[ks[i]]={};o=o[ks[i]];}if(v===null)delete o[ks[ks.length-1]];else o[ks[ks.length-1]]=clone(v);};
+  const avisar=()=>{const db=ler();ouv.slice().forEach(l=>l.cb(clone(pegar(db,l.p))));};
+  const gravar=db=>{try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}avisar();if(bc)bc.postMessage(1);};
+  if(bc)bc.onmessage=avisar; window.addEventListener("storage",e=>{if(e.key===KEY)avisar();});
+  return {tipo:"local",conectado:true,
+    ouvir(p,cb){const l={p,cb};ouv.push(l);setTimeout(()=>cb(clone(pegar(ler(),p))),0);return()=>{const i=ouv.indexOf(l);if(i>=0)ouv.splice(i,1);};},
+    set(p,v){const db=ler();por(db,p,v);gravar(db);},update(p,o){const db=ler();for(const k in o)por(db,p+"/"+k,o[k]);gravar(db);},remove(p){const db=ler();por(db,p,null);gravar(db);}};
+}
+let rede; try{rede=temFirebase?redeFirebase():redeLocal();}catch(e){rede=redeLocal();}
+
+const params=new URLSearchParams(location.search);
+const SALA_FONE=(params.get("sala")||"").toUpperCase().replace(/[^A-Z]/g,"").slice(0,4);
+const EH_FONE=SALA_FONE.length===4;
+const base=s=>"salas/cc-"+s;
+
+function marcaHTML(tit){const t=TITULOS[tit]||TITULOS.bdsm;return '<div class="marca"><h1 class="sigla">'+t.s+'</h1><span class="extenso">'+esc(t.n)+'</span></div>';}
+
+/* =====================================================================
+   TV (anfitrião): é quem embaralha, distribui e decide.
+   ===================================================================== */
+const CHAVE="bdsm-host-v1";
+let h=null, remoto={}, desligar=null, feitos=new Set(), timer=null;
+
+function hostNovo(){
+  return {fase:"config",sala:novoCodigo(),titulo:"bdsm",juiz:"rotativo",nomes:"censurado",niveis:{M:true,A:true,S:false,T:true},meta:7,turmaP:"",turmaB:"",
+    brancas:[],pretas:[],monteB:[],usadasB:[],monteP:[],usadasP:[],maos:{},pontos:{},nomesCache:{},ordem:[],juizIdx:-1,r:null,historico:[]};
+}
+function salvar(){guardar(CHAVE,h);}
+function jogadores(){
+  const j=remoto.jogadores||{};
+  return Object.keys(j).map(id=>({id,nome:j[id].nome||"Sem nome",entrou:j[id].entrou||0})).sort((a,b)=>a.entrou-b.entrou);
+}
+function nomeDe(id){const p=jogadores().find(x=>x.id===id);return p?p.nome:(h.nomesCache[id]||"Alguém");}
+
+function montarBaralho(){
+  const B=window.BARALHO, br=[], pr=[];
+  B.brancas.forEach((l,i)=>{const n=l[0];if(h.niveis[n])br.push({id:"b"+i,t:l.slice(2)});});
+  B.pretas.forEach((l,i)=>{const n=l[0];if(h.niveis[n])pr.push({id:"p"+i,t:l.slice(2)});});
+  if(h.niveis.T){
+    h.turmaB.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((t,i)=>br.push({id:"tb"+i,t}));
+    h.turmaP.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((t,i)=>pr.push({id:"tp"+i,t:t.indexOf("___")>=0?t:t.replace(/[.?!]?$/,"")+": ___."}));
+  }
+  h.brancas=br; h.pretas=pr;
+  h.monteB=embaralha(br.map(c=>c.id)); h.usadasB=[]; h.monteP=embaralha(pr.map(c=>c.id)); h.usadasP=[];
+}
+const textoB=id=>{const c=h.brancas.find(x=>x.id===id);return c?c.t:"";};
+const textoP=id=>{const c=h.pretas.find(x=>x.id===id);return c?c.t:"";};
+function comprarB(){ if(!h.monteB.length){h.monteB=embaralha(h.usadasB);h.usadasB=[];} return h.monteB.shift(); }
+function comprarP(){ if(!h.monteP.length){h.monteP=embaralha(h.usadasP);h.usadasP=[];} return h.monteP.shift(); }
+function contarCartas(){
+  const n=k=>k==="T"?(h.turmaB.split(/\n/).filter(s=>s.trim()).length):window.BARALHO.brancas.filter(l=>l[0]===k).length;
+  const p=k=>k==="T"?(h.turmaP.split(/\n/).filter(s=>s.trim()).length):window.BARALHO.pretas.filter(l=>l[0]===k).length;
+  let b=0,q=0; Object.keys(NIVEIS).forEach(k=>{if(h.niveis[k]){b+=n(k);q+=p(k);}}); return {b,q,n,p};
+}
+
+function ligarSala(){
+  if(desligar) desligar();
+  remoto={};
+  desligar=rede.ouvir(base(h.sala),v=>{remoto=v||{};processar();desenhar();});
+  publicar();
+}
+function publicar(){
+  const r=h.r, js=jogadores();
+  const est={fase:h.fase,titulo:h.titulo,juizModo:h.juiz,nomesModo:h.nomes,meta:h.meta,atualizado:Date.now()};
+  if(r){
+    est.rodada=r.n; est.etapa=r.etapa; est.preta={t:textoP(r.preta),lac:lacunas(textoP(r.preta))}; est.juiz=r.juiz||"";
+    est.prontos=r.prontos||{};
+    if(r.etapa!=="jogando") est.respostas=r.respostas.map(x=>({k:x.k,ids:x.ids,ts:x.ids.map(textoB)}));
+    if(r.etapa==="resultado"||r.etapa==="troca"){ est.vencedores=r.vencedores; if(h.nomes==="aberto") est.vencNomes=r.vencedores.map(k=>nomeDe(r.mapa[k])); }
+  }
+  if(h.nomes==="aberto"||h.fase==="fim") est.placar=js.map(p=>({id:p.id,nome:p.nome,pts:h.pontos[p.id]||0}));
+  if(h.fase==="fim") est.momentos=h.historico.map(x=>({preta:x.preta,ts:x.ts,nome:x.nome}));
+  const up={estado:est};
+  Object.keys(h.maos).forEach(pid=>{up["maos/"+pid]=h.maos[pid].map(id=>({id,t:textoB(id)}));});
+  rede.update(base(h.sala),up);
+}
+
+function comecar(){
+  rede.remove(base(h.sala)+"/jogadas"); rede.remove(base(h.sala)+"/votos"); rede.remove(base(h.sala)+"/trocas"); rede.remove(base(h.sala)+"/cmd");
+  montarBaralho(); h.maos={}; h.pontos={}; h.historico=[]; h.juizIdx=-1; h.r=null;
+  jogadores().forEach(p=>{h.nomesCache[p.id]=p.nome;});
+  h.fase="jogo"; novaRodada();
+}
+function novaRodada(){
+  const js=jogadores(), n=(h.r?h.r.n:0)+1;
+  js.forEach(p=>{ h.nomesCache[p.id]=p.nome; const m=h.maos[p.id]||(h.maos[p.id]=[]); while(m.length<MAO){const c=comprarB(); if(!c)break; m.push(c);} });
+  Object.keys(h.maos).forEach(pid=>{ if(!js.find(p=>p.id===pid)){ h.usadasB.push(...h.maos[pid]); delete h.maos[pid]; } });
+  let juiz=null;
+  if(h.juiz==="rotativo"&&js.length){ h.juizIdx=(h.juizIdx+1)%js.length; juiz=js[h.juizIdx].id; }
+  h.r={n,preta:comprarP(),juiz,etapa:"jogando",prontos:{},respostas:[],mapa:{},vencedores:[]};
+  salvar(); publicar();
+}
+function participantes(){ const js=jogadores(); return h.r&&h.r.juiz?js.filter(p=>p.id!==h.r.juiz):js; }
+function processar(){
+  if(!h||h.fase!=="jogo"||!h.r) return;
+  const r=h.r, n=r.n;
+  /* comandos */
+  const cmd=remoto.cmd||{};
+  Object.keys(cmd).forEach(k=>{ if(feitos.has(k)) return; feitos.add(k); rede.remove(base(h.sala)+"/cmd/"+k); if(cmd[k]&&cmd[k].c==="proxima") avancar(); });
+  if(r.etapa==="jogando"){
+    const jog=(remoto.jogadas||{})[n]||{}, lac=lacunas(textoP(r.preta)); let mudou=false;
+    participantes().forEach(p=>{
+      const ids=arr(jog[p.id]);
+      if(!r.prontos[p.id]&&ids.length===lac&&ids.every(id=>(h.maos[p.id]||[]).indexOf(id)>=0)){ r.prontos[p.id]=ids; mudou=true; }
+    });
+    if(mudou){ salvar(); publicar(); }
+    const part=participantes();
+    if(part.length>=2&&part.every(p=>r.prontos[p.id])) irJulgar();
+  }else if(r.etapa==="julgando"){
+    const votos=(remoto.votos||{})[n]||{};
+    if(h.juiz==="rotativo"){ const v=votos[r.juiz]; if(v!=null&&r.respostas.find(x=>x.k===v)) decidir([v]); }
+    else{
+      const js=jogadores(), validos={};
+      js.forEach(p=>{const v=votos[p.id]; if(v!=null&&r.respostas.find(x=>x.k===v)&&r.mapa[v]!==p.id) validos[p.id]=v;});
+      r.contagemVotos=Object.keys(validos).length;
+      if(js.every(p=>validos[p.id]!=null||!r.respostas.some(x=>r.mapa[x.k]!==p.id))) contarVotos(validos);
+    }
+  }else if(r.etapa==="troca"){
+    const tr=(remoto.trocas||{})[n]||{}; let mudou=false;
+    jogadores().forEach(p=>{ if(tr[p.id]&&!r.prontos[p.id]){ r.prontos[p.id]=true; mudou=true; } });
+    if(mudou){ salvar(); publicar(); }
+    if(jogadores().every(p=>r.prontos[p.id])) aplicarTroca();
+  }
+}
+function irJulgar(){
+  const r=h.r, ks=embaralha(Object.keys(r.prontos));
+  r.respostas=ks.map((pid,i)=>{ r.mapa[i]=pid; return {k:i,ids:r.prontos[pid]}; });
+  r.etapa="julgando"; r.prontos={};
+  salvar(); publicar(); desenhar();
+}
+function contarVotos(validos){
+  const c={}; Object.values(validos).forEach(k=>{c[k]=(c[k]||0)+1;});
+  const max=Math.max(0,...Object.values(c));
+  decidir(max>0?Object.keys(c).filter(k=>c[k]===max).map(Number):[], c);
+}
+function decidir(ks,contagem){
+  const r=h.r; if(r.etapa!=="julgando") return;
+  r.vencedores=ks; r.contagem=contagem||null; r.etapa="resultado";
+  const pret=textoP(r.preta);
+  ks.forEach(k=>{ const pid=r.mapa[k]; h.pontos[pid]=(h.pontos[pid]||0)+1;
+    h.historico.push({preta:pret,ts:r.respostas.find(x=>x.k===k).ids.map(textoB),nome:nomeDe(pid)}); });
+  /* cartas jogadas saem das mãos */
+  r.respostas.forEach(x=>{ const pid=r.mapa[x.k], m=h.maos[pid]||[]; x.ids.forEach(id=>{const i=m.indexOf(id); if(i>=0) m.splice(i,1); h.usadasB.push(id);}); });
+  h.usadasP.push(r.preta);
+  salvar(); publicar(); desenhar();
+}
+function avancar(){
+  const r=h.r; if(!r) return;
+  if(r.etapa==="resultado"){
+    const lider=Math.max(0,...Object.values(h.pontos));
+    if(h.meta&&lider>=h.meta){ h.fase="fim"; salvar(); publicar(); desenhar(); return; }
+    if(r.n%TROCA_CADA===0){
+      /* completa as mãos antes da troca, para cada um escolher entre 7 */
+      jogadores().forEach(p=>{const m=h.maos[p.id]||(h.maos[p.id]=[]); while(m.length<MAO){const c=comprarB(); if(!c)break; m.push(c);}});
+      r.etapa="troca"; r.prontos={}; salvar(); publicar(); desenhar(); return;
+    }
+    novaRodada(); desenhar();
+  }else if(r.etapa==="troca"){ aplicarTroca(); }
+}
+function aplicarTroca(){
+  const r=h.r; if(r.etapa!=="troca") return;
+  const tr=(remoto.trocas||{})[r.n]||{}, devolver=[];
+  jogadores().forEach(p=>{
+    const m=h.maos[p.id]||[], ids=arr(tr[p.id]&&tr[p.id].ids).filter(id=>m.indexOf(id)>=0).slice(0,TROCA_MAX);
+    ids.forEach(id=>{ m.splice(m.indexOf(id),1); devolver.push(id); });
+    while(m.length<MAO){const c=comprarB(); if(!c)break; m.push(c);}
+  });
+  h.monteB.push(...devolver);
+  novaRodada(); desenhar();
+}
+function escolherPelaTV(k){ if(h.r&&h.r.etapa==="julgando") decidir([k]); }
+
+/* ----- telas da TV ----- */
+function seg(a,ops,atual){return '<div class="seg">'+ops.map(o=>'<button data-a="'+a+'" data-v="'+o[0]+'" aria-pressed="'+(String(atual)===String(o[0]))+'">'+o[1]+'</button>').join("")+'</div>';}
+function urlFone(){return location.origin+location.pathname+"?sala="+h.sala;}
+function topoTV(extra){
+  return '<header class="topo">'+marcaHTML(h.titulo)+'<div class="chips"><span class="chip quente">Sala '+h.sala+'</span>'+
+    (rede.tipo==="local"?'<span class="chip">Modo de teste</span>':(rede.conectado?'<span class="chip ok">Conectado</span>':'<span class="chip">Sem conexão</span>'))+(extra||"")+'</div></header>';
+}
+function telaConfig(){
+  const js=jogadores(), cc=contarCartas(), pode=js.length>=3&&cc.b>=js.length*MAO+10&&cc.q>0;
+  return topoTV()+
+  '<main class="bloco" style="gap:24px">'+
+  '<section class="entrada"><div class="qr" id="qr"></div><div class="bloco"><span class="rotulo">Entrem pelo celular</span><span class="codigo">'+h.sala+'</span><span class="endereco">'+esc(urlFone())+'</span>'+
+    '<p class="nota">Cada um lê o QR Code, digita o nome e recebe '+MAO+' cartas no próprio celular. Mínimo de 3 pessoas.</p>'+
+    (rede.tipo==="local"?'<p class="aviso">Firebase não configurado: modo de teste, só entre abas deste navegador.</p>':'')+'</div></section>'+
+  '<section class="bloco"><p class="rotulo">Na mesa ('+js.length+')</p>'+(js.length?'<ul class="pessoas">'+js.map(p=>'<li class="pessoa">'+esc(p.nome)+'<button class="x" data-a="expulsar" data-id="'+p.id+'" aria-label="Tirar '+esc(p.nome)+'">Tirar</button></li>').join("")+'</ul>':'<p class="nota">Ninguém entrou ainda.</p>')+'</section>'+
+  '<section class="ajustes">'+
+    
+    '<div class="bloco"><p class="rotulo">Quem escolhe a melhor</p>'+seg("juiz",[["rotativo","Juiz rotativo"],["popular","Voto popular"]],h.juiz)+
+      '<p class="nota">'+(h.juiz==="rotativo"?"A cada rodada, um jogador é o juiz: não joga e escolhe a resposta vencedora.":"Todo mundo joga e todo mundo vota, menos na própria resposta. Empate dá ponto para todos os empatados.")+'</p></div>'+
+    '<div class="bloco"><p class="rotulo">Nomes</p>'+seg("nomes",[["censurado","Censurado"],["aberto","Não censurado"]],h.nomes)+
+      '<p class="nota">'+(h.nomes==="censurado"?"Ninguém sabe quem jogou o quê. O placar e os autores só aparecem no fim.":"A cada rodada aparece o nome do dono da resposta vencedora. As outras continuam anônimas.")+'</p></div>'+
+    '<div class="bloco"><p class="rotulo">Partida até</p>'+seg("meta",[[5,"5 pontos"],[7,"7 pontos"],[10,"10 pontos"],[0,"Sem limite"]],h.meta)+'<p class="nota">A cada '+TROCA_CADA+' rodadas, cada um pode trocar até '+TROCA_MAX+' das '+MAO+' cartas. A cada rodada, todo mundo compra para voltar a ter '+MAO+'.</p></div>'+
+  '</section>'+
+  '<section class="bloco"><p class="rotulo">Níveis no baralho</p><div class="seg">'+Object.keys(NIVEIS).map(k=>'<button data-a="nivel" data-v="'+k+'" aria-pressed="'+!!h.niveis[k]+'">'+NIVEIS[k]+' · '+cc.p(k)+'/'+cc.n(k)+'</button>').join("")+'</div>'+
+    '<p class="nota" id="contagem">'+pl(cc.q,"pergunta","perguntas")+' e '+pl(cc.b,"resposta","respostas")+' no baralho.'+(cc.b<js.length*MAO+10?' Poucas respostas para esta mesa: ligue mais níveis.':'')+'</p></section>'+
+  '<section class="ajustes"><div class="bloco"><p class="rotulo">Perguntas da turma</p><textarea id="turmaP" placeholder="Uma por linha. Use ___ para a lacuna. Ex.: O Thiago foi visto ___ no banheiro da firma.">'+esc(h.turmaP)+'</textarea></div>'+
+    '<div class="bloco"><p class="rotulo">Respostas da turma</p><textarea id="turmaB" placeholder="Uma por linha. Ex.: O churrasco que o Harvey prometeu em 2019.">'+esc(h.turmaB)+'</textarea></div></section>'+
+  '<p class="nota">As cartas da turma ficam salvas só neste aparelho e entram no nível "Da turma".</p>'+
+  '<section class="acoes"><button class="btn" data-a="comecar"'+(pode?"":" disabled")+'>Distribuir as cartas</button>'+(js.length<3?'<span class="nota">Faltam '+(3-js.length)+' para começar.</span>':'')+
+    '<button class="btn sec mini" data-a="nova-sala">Abrir outra sala</button></section>'+
+  '</main>';
+}
+function cartaPretaHTML(r,extra){
+  const t=textoP(r.preta);
+  return '<div class="preta"><p class="t">'+preencher(t,null)+'</p><div class="rod"><span>Rodada '+r.n+(lacunas(t)>1?' · escolha '+lacunas(t)+' cartas':'')+'</span><span>'+(extra||"")+'</span></div></div>';
+}
+function placarHTML(){
+  const js=jogadores();
+  if(h.nomes==="censurado") return '<div class="painel"><p class="rotulo">Placar</p><p class="nota">Secreto até o fim da partida. Ninguém sabe quem está ganhando.</p>'+(h.meta?'<p class="nota">Vence quem chegar a '+h.meta+' pontos.</p>':'')+'</div>';
+  const ord=js.slice().sort((a,b)=>(h.pontos[b.id]||0)-(h.pontos[a.id]||0)), top=ord.length?(h.pontos[ord[0].id]||0):0;
+  return '<div class="painel"><p class="rotulo">Placar'+(h.meta?' · até '+h.meta:'')+'</p><ul class="placar">'+ord.map(p=>'<li class="'+((h.pontos[p.id]||0)===top&&top>0?"lider":"")+'"><span>'+esc(p.nome)+'</span><b>'+(h.pontos[p.id]||0)+'</b></li>').join("")+'</ul></div>';
+}
+function telaJogo(){
+  const r=h.r, js=jogadores(), t=textoP(r.preta);
+  let corpo="";
+  if(r.etapa==="jogando"){
+    const part=participantes();
+    corpo='<section class="bloco">'+cartaPretaHTML(r,h.juiz==="rotativo"?"Juiz: "+esc(nomeDe(r.juiz)):"Voto popular")+'</section>'+
+      '<section class="bloco"><p class="rotulo">Respostas: '+Object.keys(r.prontos).length+' de '+part.length+'</p><ul class="pessoas">'+
+      part.map(p=>'<li class="pessoa '+(r.prontos[p.id]?"pronto":"espera")+'">'+esc(p.nome)+'</li>').join("")+
+      (r.juiz?'<li class="pessoa">'+esc(nomeDe(r.juiz))+'<span class="tag">juiz</span></li>':'')+'</ul>'+
+      '<p class="nota">Cada um escolhe '+(lacunas(t)>1?lacunas(t)+' cartas, na ordem das lacunas,':'uma carta')+' no próprio celular.</p>'+
+      (Object.keys(r.prontos).length>=2?'<div class="acoes"><button class="btn sec mini" data-a="forcar">Seguir com quem já respondeu</button></div>':'')+'</section>';
+  }else if(r.etapa==="julgando"||r.etapa==="resultado"){
+    const fim=r.etapa==="resultado", letra=i=>String.fromCharCode(65+i);
+    corpo='<section class="bloco">'+cartaPretaHTML(r,h.juiz==="rotativo"?"Juiz: "+esc(nomeDe(r.juiz)):"Voto popular")+'</section>'+
+      '<section class="bloco"><p class="rotulo">'+(fim?"Resultado":(h.juiz==="rotativo"?esc(nomeDe(r.juiz))+" está escolhendo no celular":"Votem no celular: "+(r.contagemVotos||0)+" de "+js.length+" votos"))+'</p>'+
+      '<div class="respostas">'+r.respostas.map((x,i)=>{
+        const venc=fim&&r.vencedores.indexOf(x.k)>=0, dono=fim&&venc&&h.nomes==="aberto"?nomeDe(r.mapa[x.k]):"";
+        const votos=fim&&r.contagem?(r.contagem[x.k]||0):null;
+        return '<div class="resposta'+(fim?(venc?" venceu":" perdeu"):"")+'" style="animation-delay:'+(i*180)+'ms"><p class="frase">'+preencher(t,x.ids.map(textoB))+'</p>'+
+          '<div class="acoes" style="justify-content:space-between"><span class="letra">'+letra(i)+'</span>'+
+          (dono?'<span class="dono">'+esc(dono)+'</span>':(venc?'<span class="dono">Vencedora</span>':''))+(votos!=null?'<span class="nota" style="color:#555">'+pl(votos,"voto","votos")+'</span>':'')+
+          (!fim?'<button class="btn sec mini" style="color:#111;border-color:#bbb" data-a="tv-escolher" data-k="'+x.k+'">Escolher pela TV</button>':'')+'</div></div>';
+      }).join("")+'</div></section>';
+    if(fim){
+      const v=r.vencedores;
+      corpo+='<section class="vitoria">'+(v.length?(h.nomes==="aberto"?'<p class="quem">'+esc(lista(v.map(k=>nomeDe(r.mapa[k]))))+(v.length>1?" levam":" leva")+' o ponto</p>':'<p class="quem">'+(v.length>1?"Empate: as duas levam ponto":"Essa levou")+'</p><p class="nota">Quem foi? Só no fim da partida.</p>'):'<p class="quem">Ninguém levou</p>')+
+        '<div class="acoes"><button class="btn" data-a="proxima">'+(r.n%TROCA_CADA===0?"Abrir a troca de cartas":"Próxima rodada")+'</button></div><p class="nota">Também dá para avançar pelo celular.</p></section>';
+    }
+  }else if(r.etapa==="troca"){
+    corpo='<section class="bloco"><h2 class="chamada">Hora da reciclagem</h2><p class="nota">Cada um marca no celular as cartas fracas (até '+TROCA_MAX+' das '+MAO+') e recebe novas. As descartadas voltam para o fundo do monte. Ninguém é obrigado a trocar.</p>'+
+      '<ul class="pessoas">'+js.map(p=>'<li class="pessoa '+(r.prontos[p.id]?"pronto":"espera")+'">'+esc(p.nome)+'</li>').join("")+'</ul>'+
+      '<div class="acoes"><button class="btn sec mini" data-a="proxima">Seguir sem esperar</button></div></section>';
+  }
+  return topoTV('<span class="chip">Rodada '+r.n+'</span><span class="chip">'+h.monteB.length+' no monte</span>')+
+    '<main class="bloco" style="gap:20px">'+corpo+'</main><aside class="bloco">'+placarHTML()+
+    '<div class="acoes"><button class="btn sec mini" data-a="encerrar">Encerrar a partida</button><button class="btn sec mini" data-a="qr-ver">Entrar mais gente</button></div>'+(verQR?'<div class="painel"><div class="qr" id="qr"></div><span class="endereco">'+esc(urlFone())+'</span><p class="nota">Quem entrar agora recebe a mão na próxima rodada.</p></div>':'')+'</aside>';
+}
+let verQR=false;
+function ranking(){ return jogadores().map(p=>({nome:p.nome,pts:h.pontos[p.id]||0})).sort((a,b)=>b.pts-a.pts); }
+function telaFim(){
+  const rk=ranking();
+  return topoTV()+'<main class="bloco" style="gap:24px"><section class="bloco"><p class="rotulo">Fim da partida'+(h.r?' · '+pl(h.r.n,"rodada","rodadas"):'')+'</p><h2 class="chamada">'+(rk.length&&rk[0].pts?esc(rk[0].nome)+' é a pessoa mais sem moral da mesa':'Ninguém pontuou. Mesa de santos.')+'</h2></section>'+
+    '<section class="podio">'+rk.map((p,i)=>'<div><span class="pos">'+(i+1)+'º</span><span class="nm">'+esc(p.nome)+'</span><span>'+pl(p.pts,"ponto","pontos")+'</span></div>').join("")+'</section>'+
+    (h.historico.length?'<section class="painel"><p class="rotulo">Melhores momentos'+(h.nomes==="censurado"?' · agora com os autores':'')+'</p><ul class="momentos">'+h.historico.map(x=>'<li><p class="frase">'+preencher(x.preta,x.ts)+'</p><span class="de">'+esc(x.nome)+'</span></li>').join("")+'</ul></section>':'')+
+    '<section class="acoes"><button class="btn" data-a="voltar-config">Nova partida</button></section></main>';
+}
+function desenhar(){
+  if(EH_FONE){desenharFone();return;}
+  const app=$("#app"), foco=document.activeElement&&document.activeElement.id, sel=foco&&document.activeElement.selectionStart;
+  if(h.fase==="config"){ app.className="app"; app.innerHTML=telaConfig(); }
+  else if(h.fase==="fim"){ app.className="app"; app.innerHTML=telaFim(); }
+  else if(h.r){ app.className="app tv-jogo"; app.innerHTML=telaJogo(); }
+  document.title=TITULOS[h.titulo].txt;
+  const qr=$("#qr"); if(qr&&window.QRCode){try{new QRCode(qr,{text:urlFone(),width:180,height:180,correctLevel:QRCode.CorrectLevel.M});}catch(e){}} else if(qr) qr.innerHTML='<b style="color:#111;font-size:28px">'+h.sala+'</b>';
+  if(foco){const el=document.getElementById(foco);if(el){el.focus();try{if(sel!=null)el.setSelectionRange(sel,sel);}catch(e){}}}
+}
+function agirTV(a,d){
+  switch(a){
+    case "titulo": h.titulo=d.v; break;
+    case "juiz": h.juiz=d.v; break;
+    case "nomes": h.nomes=d.v; break;
+    case "meta": h.meta=+d.v; break;
+    case "nivel": h.niveis[d.v]=!h.niveis[d.v]; break;
+    case "expulsar": rede.remove(base(h.sala)+"/jogadores/"+d.id); rede.remove(base(h.sala)+"/maos/"+d.id); return;
+    case "nova-sala": rede.remove(base(h.sala)); h.sala=novoCodigo(); ligarSala(); break;
+    case "comecar": comecar(); break;
+    case "forcar": if(h.r&&h.r.etapa==="jogando"&&Object.keys(h.r.prontos).length>=2) irJulgar(); return;
+    case "tv-escolher": escolherPelaTV(+d.k); return;
+    case "proxima": avancar(); return;
+    case "encerrar": h.fase="fim"; break;
+    case "qr-ver": verQR=!verQR; break;
+    case "voltar-config": h.fase="config"; h.r=null; h.maos={}; rede.remove(base(h.sala)+"/maos"); break;
+    default: return;
+  }
+  salvar(); publicar(); desenhar();
+}
+
+/* =====================================================================
+   CELULAR
+   ===================================================================== */
+const CHAVE_FONE="bdsm-fone-"+SALA_FONE;
+let eu=abrir(CHAVE_FONE)||{id:null,nome:""}, sala=null, escolha=[], descarte=[], escolhaVoto=null, rodadaEscolha=null;
+function enviar(caminho,valor){ rede.set(base(SALA_FONE)+"/"+caminho,valor); }
+function desenharFone(){
+  const app=$("#app"); app.className="app fone";
+  const foco=document.activeElement&&document.activeElement.id, val=foco==="meu-nome"?document.activeElement.value:null;
+  const s=sala, est=s&&s.estado;
+  document.title=est?TITULOS[est.titulo||"bdsm"].txt:"B.D.S.M.";
+  let corpo;
+  if(s===null) corpo='<p class="nota">Procurando a sala '+esc(SALA_FONE)+'…</p>';
+  else if(!est) corpo='<section class="bloco"><h2 class="chamada">Sala '+esc(SALA_FONE)+' não encontrada</h2><p class="nota">Confira o código na TV ou leia o QR Code de novo.</p></section>';
+  else if(!eu.id||!(s.jogadores&&s.jogadores[eu.id])) corpo='<section class="bloco"><p class="rotulo">Sala '+esc(SALA_FONE)+'</p><h2 class="chamada">'+(eu.id?"Você saiu da mesa. Volta?":"Como a turma te chama?")+'</h2><form class="linha-form" id="form-entrar"><input type="text" id="meu-nome" maxlength="18" value="'+esc(eu.nome)+'" placeholder="Seu nome" aria-label="Seu nome" autocomplete="off" required><button class="btn" type="submit">Sentar</button></form></section>';
+  else corpo=corpoFone(s,est);
+  app.innerHTML='<header class="topo">'+marcaHTML(est?est.titulo:"bdsm")+'<div class="chips"><span class="chip quente">Sala '+esc(SALA_FONE)+'</span>'+(eu.nome?'<span class="chip">'+esc(eu.nome)+'</span>':'')+'</div></header><main class="bloco" style="gap:18px">'+corpo+'</main>';
+  if(foco){const el=document.getElementById(foco);if(el){if(val!=null)el.value=val;el.focus();}}
+}
+function corpoFone(s,est){
+  if(est.fase==="config") return '<section class="bloco"><h2 class="chamada">Você está na mesa</h2><p class="nota">Espere a TV distribuir as cartas.</p></section>';
+  if(est.fase==="fim"){
+    const rk=(est.placar||[]).slice().sort((a,b)=>b.pts-a.pts);
+    return '<section class="bloco"><h2 class="chamada">Fim da partida</h2><ul class="placar">'+rk.map((p,i)=>'<li class="'+(i===0?"lider":"")+'"><span>'+(i+1)+'º '+esc(p.nome)+'</span><b>'+p.pts+'</b></li>').join("")+'</ul><p class="nota">Os melhores momentos, com os autores, estão na TV.</p></section>';
+  }
+  const n=est.rodada, mao=arr((s.maos||{})[eu.id]), pret=est.preta||{t:"",lac:1};
+  if(rodadaEscolha!==n+est.etapa){ rodadaEscolha=n+est.etapa; escolha=[]; descarte=[]; escolhaVoto=null; }
+  const placarMeu=est.placar?(est.placar.find(p=>p.id===eu.id)||{}).pts||0:null;
+  const pe='<p class="nota">'+(placarMeu!=null?'Você tem '+pl(placarMeu,"ponto","pontos")+'. ':'Placar secreto até o fim. ')+'Rodada '+n+'.</p>';
+  const preta='<div class="preta"><p class="t">'+preencher(pret.t,null)+'</p></div>';
+  if(est.etapa==="jogando"){
+    if(est.juiz===eu.id) return preta+'<section class="bloco"><h2 class="chamada">Você é o juiz</h2><p class="nota">Espere as respostas. Quando chegarem, você escolhe a melhor aqui.</p></section>'+pe;
+    const jaFoi=est.prontos&&est.prontos[eu.id];
+    if(jaFoi) return preta+'<section class="bloco"><h2 class="chamada">Resposta enviada</h2><p class="nota">Esperando o resto da mesa.</p></section>'+pe;
+    const txt=id=>{const c=mao.find(x=>x.id===id);return c?c.t:"";};
+    return preta+
+      '<section class="bloco"><p class="rotulo">'+(pret.lac>1?"Escolha "+pret.lac+" cartas, na ordem":"Escolha sua carta")+'</p><div class="mao">'+mao.map(c=>{const i=escolha.indexOf(c.id);
+        return '<button class="carta-mao" data-a="pegar" data-id="'+c.id+'" aria-pressed="'+(i>=0)+'">'+esc(c.t)+(i>=0&&pret.lac>1?'<span class="n">'+(i+1)+'</span>':'')+'</button>';}).join("")+'</div>'+
+      (escolha.length?'<p class="rotulo">Vai ficar assim</p><p class="previa">'+preencher(pret.t,escolha.map(txt))+'</p>':'')+
+      '<button class="btn largo" data-a="jogar"'+(escolha.length===pret.lac?"":" disabled")+'>Jogar na mesa</button></section>'+pe;
+  }
+  if(est.etapa==="julgando"){
+    const resp=arr(est.respostas), meus=(est.prontos||{})[eu.id];
+    const minha=x=>arr(x.ids).some(id=>mao.find(c=>c.id===id))||false;
+    const votado=((s.votos||{})[n]||{})[eu.id];
+    if(est.juizModo==="rotativo"&&est.juiz!==eu.id) return preta+'<section class="bloco"><h2 class="chamada">O juiz está escolhendo</h2><p class="nota">Olha a TV.</p></section>'+pe;
+    if(votado!=null) return preta+'<section class="bloco"><h2 class="chamada">Voto registrado</h2><p class="nota">Esperando o resto da mesa.</p></section>'+pe;
+    return preta+'<section class="bloco"><p class="rotulo">'+(est.juizModo==="rotativo"?"Você é o juiz: escolha a melhor":"Vote na melhor (a sua não vale)")+'</p><div class="mao">'+
+      resp.map(x=>{const propria=est.juizModo==="popular"&&jaJogueiEsta(x);
+        return '<button class="resposta" data-a="voto" data-k="'+x.k+'" aria-pressed="'+(escolhaVoto===x.k)+'"'+(propria?' disabled style="opacity:.4"':'')+'><span class="frase">'+preencher(pret.t,arr(x.ts))+'</span>'+(propria?'<span class="nota" style="color:#555">Essa é a sua</span>':'')+'</button>';}).join("")+'</div>'+
+      '<button class="btn largo" data-a="confirmar-voto"'+(escolhaVoto==null?" disabled":"")+'>Confirmar</button></section>'+pe;
+  }
+  if(est.etapa==="resultado"){
+    const resp=arr(est.respostas), v=arr(est.vencedores), nomes=arr(est.vencNomes);
+    return '<section class="bloco"><p class="rotulo">Resultado</p>'+(v.length?v.map(k=>{const x=resp.find(r=>r.k===k);return '<div class="resposta venceu"><p class="frase">'+preencher(pret.t,arr(x&&x.ts))+'</p></div>';}).join(""):'<p class="nota">Ninguém levou.</p>')+
+      (nomes.length?'<p class="chamada" style="color:var(--quente)">'+esc(lista(nomes))+(nomes.length>1?" levam":" leva")+'</p>':'<p class="nota">Autor secreto até o fim.</p>')+
+      '<button class="btn largo sec" data-a="proxima">'+(n%TROCA_CADA===0?"Abrir a troca de cartas":"Próxima rodada")+'</button></section>'+pe;
+  }
+  if(est.etapa==="troca"){
+    const feito=est.prontos&&est.prontos[eu.id];
+    if(feito) return '<section class="bloco"><h2 class="chamada">Troca feita</h2><p class="nota">Esperando o resto da mesa.</p></section>'+pe;
+    return '<section class="bloco"><h2 class="chamada">Recicle sua mão</h2><p class="nota">Toque nas cartas fracas para descartar (até '+TROCA_MAX+' das '+MAO+').'+(descarte.length>=TROCA_MAX?' Limite atingido.':'')+' Elas voltam para o fundo do monte e você recebe novas.</p><div class="mao">'+
+      mao.map(c=>'<button class="carta-mao'+(descarte.indexOf(c.id)>=0?" descartar":"")+'" data-a="descartar" data-id="'+c.id+'" aria-pressed="'+(descarte.indexOf(c.id)>=0)+'">'+esc(c.t)+'</button>').join("")+'</div>'+
+      '<div class="acoes"><button class="btn" data-a="trocar"'+(descarte.length?"":" disabled")+'>Trocar '+pl(descarte.length,"carta","cartas")+'</button><button class="btn sec" data-a="manter">Manter minha mão</button></div></section>'+pe;
+  }
+  return pe;
+}
+let ultimaJogada={n:null,ids:[]};
+function jaJogueiEsta(x){ return ultimaJogada.n===(sala&&sala.estado&&sala.estado.rodada)&&arr(x.ids).join()===ultimaJogada.ids.join(); }
+function foneClique(b){
+  const a=b.dataset.a, est=sala&&sala.estado; if(!est) return;
+  const n=est.rodada;
+  switch(a){
+    case "pegar": { const id=b.dataset.id, i=escolha.indexOf(id), lac=(est.preta||{}).lac||1;
+      if(i>=0) escolha.splice(i,1); else { if(escolha.length>=lac) escolha.shift(); escolha.push(id); } break; }
+    case "jogar": if(escolha.length===((est.preta||{}).lac||1)){ ultimaJogada={n,ids:escolha.slice()}; guardar(CHAVE_FONE+"-ult",ultimaJogada); enviar("jogadas/"+n+"/"+eu.id,escolha); } break;
+    case "voto": escolhaVoto=+b.dataset.k; break;
+    case "confirmar-voto": if(escolhaVoto!=null) enviar("votos/"+n+"/"+eu.id,escolhaVoto); break;
+    case "descartar": { const id=b.dataset.id,i=descarte.indexOf(id); if(i>=0) descarte.splice(i,1); else if(descarte.length<TROCA_MAX) descarte.push(id); break; }
+    case "trocar": enviar("trocas/"+n+"/"+eu.id,{ok:true,ids:descarte}); break;
+    case "manter": enviar("trocas/"+n+"/"+eu.id,{ok:true}); break;
+    case "proxima": enviar("cmd/"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),{c:"proxima",por:eu.id}); b.disabled=true; return;
+  }
+  desenharFone();
+}
+
+/* ---------------- eventos ---------------- */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a]"); if(!b||b.disabled) return;
+  if(EH_FONE) foneClique(b); else agirTV(b.dataset.a,b.dataset);
+});
+document.addEventListener("submit",e=>{
+  e.preventDefault();
+  if(e.target.id==="form-entrar"){ const nm=$("#meu-nome").value.trim().slice(0,18); if(!nm) return;
+    eu={id:eu.id||novoId(),nome:nm}; guardar(CHAVE_FONE,eu); rede.set(base(SALA_FONE)+"/jogadores/"+eu.id,{nome:nm,entrou:Date.now()}); }
+});
+document.addEventListener("input",e=>{
+  if(EH_FONE) return;
+  if(e.target.id==="turmaP"||e.target.id==="turmaB"){ h[e.target.id]=e.target.value; salvar();
+    const c=$("#contagem"),cc=contarCartas(); if(c) c.textContent=pl(cc.q,"pergunta","perguntas")+" e "+pl(cc.b,"resposta","respostas")+" no baralho."; }
+});
+document.addEventListener("change",e=>{ if(!EH_FONE&&(e.target.id==="turmaP"||e.target.id==="turmaB")) desenhar(); });
+let trava=null;
+function manterTela(){ if(trava||!navigator.wakeLock) return; navigator.wakeLock.request("screen").then(w=>{trava=w;w.addEventListener("release",()=>{trava=null;});}).catch(()=>{}); }
+document.addEventListener("click",manterTela);
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") manterTela(); });
+
+/* ---------------- início ---------------- */
+if(EH_FONE){
+  ultimaJogada=abrir(CHAVE_FONE+"-ult")||{n:null,ids:[]};
+  desenharFone();
+  rede.ouvir(base(SALA_FONE),v=>{sala=v||{};desenharFone();});
+}else{
+  h=abrir(CHAVE)||hostNovo(); h.titulo="bdsm";
+  const b0=hostNovo(); for(const k in b0) if(h[k]===undefined) h[k]=b0[k];
+  ligarSala(); desenhar();
+}
+})();
+</script>
+</body>
+</html>
