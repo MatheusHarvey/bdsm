@@ -4,6 +4,8 @@ Um jogo de cartas de humor ácido para jogar com a galera: a carta preta aparece
 
 **Jogar:** abra o link do GitHub Pages deste repositório na TV ou no notebook. Os jogadores entram pelo QR Code que aparece na tela.
 
+**Jogar sozinho:** abra `solo.html` no mesmo endereço (por exemplo, `.../solo.html`), no celular ou no computador.
+
 > ⚠️ **Conteúdo adulto.** Humor sobre sexo, morte, religião, política, crime e desgraças do cotidiano. Feito para maiores de 18 anos e para amigos que topam a brincadeira.
 
 ## Como funciona
@@ -28,6 +30,19 @@ Um jogo de cartas de humor ácido para jogar com a galera: a carta preta aparece
 - **Reciclagem:** a cada 5 rodadas, cada jogador pode trocar **até 7 das 10 cartas** da mão. As descartadas voltam para o fundo do monte.
 - **Sem cartas repetidas:** o baralho é um monte único, e nenhuma carta aparece na mão de dois jogadores ao mesmo tempo.
 - **Partida até 5, 7 ou 10 pontos**, ou sem limite.
+- **Cartas etiquetadas:** toda carta tem um número fixo (aparece no canto, como `#212`), um tipo (objeto, ato, pessoa, situação ou conceito) e temas. As mãos são distribuídas misturando os tipos, para ninguém ficar só com cartas que não encaixam.
+
+## Modo solo
+
+Você joga contra 2 a 4 bots com personalidade: a **Tia do Zap**, o **Coach Quântico**, o **Sem Filtro** e **O Sorteio**. Cada um tem gosto próprio por temas e níveis de acidez.
+
+1. A pergunta aparece com o tipo de carta que a lacuna aceita.
+2. Você escolhe a sua resposta. Com o **cadeado fechado**, só as cartas que encaixam ficam liberadas. Com o cadeado aberto, a mão fica livre.
+3. Os bots jogam, e as respostas aparecem embaralhadas e sem nome.
+4. **Você é o juiz** e escolhe a melhor, inclusive a sua.
+5. No resultado, dá para tocar no número de uma carta que não encaixou. A lista fica na tela inicial, pronta para copiar e ajustar as etiquetas.
+
+A partida fica salva no aparelho: dá para fechar e continuar depois.
 
 ## Requisitos
 
@@ -37,7 +52,8 @@ Um jogo de cartas de humor ácido para jogar com a galera: a carta preta aparece
 
 ## Arquivos
 
-- `index.html`: o jogo inteiro, com o baralho embutido.
+- `index.html`: o jogo para a turma, com o baralho embutido.
+- `solo.html`: o modo solo, que funciona sem internet depois de aberto.
 
 ## Créditos
 

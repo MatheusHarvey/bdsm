@@ -22,166 +22,368 @@ window.FIREBASE_CONFIG = {
 <script src="https://cdn.jsdelivr.net/npm/firebase@10.12.2/firebase-database-compat.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-/* Baralho base. Prefixo: M = Morno, A = Ácido, S = Sem perdão. "___" marca cada lacuna. */
-window.BARALHO = {
-pretas: [
-"M|Nova regra do condomínio: é proibido ___ depois das 22h.",
-"M|O que o meu avô esconde no fundo do guarda-roupa? ___.",
-"M|O coach quântico garante: em 7 dias, ___ vai mudar a sua vida.",
-"M|Urgente: o governo anuncia ___ para combater a inflação.",
-"M|O que a NASA encontrou em Marte? ___.",
-"M|Grupo da família, 6h da manhã: \"Bom dia! Compartilhem: ___\".",
-"M|O pastor do Instagram jura que ___ cura qualquer coisa.",
-"M|Trailer do novo filme nacional: \"Antes ele era só um homem. Agora ele é ___.\"",
-"M|O verdadeiro segredo da receita da vó: ___.",
-"M|Bio do meu Tinder: \"Gosto de viajar, comer bem e ___.\"",
-"M|Novo esporte olímpico: ___.",
-"M|A Faria Lima lançou um aplicativo de ___.",
-"M|Horóscopo de hoje: \"Cuidado com ___ e evite ___.\"",
-"M|Os alienígenas chegaram, e a primeira coisa que pediram foi ___.",
-"M|O segredo da vida eterna, segundo um bilionário: ___.",
-"M|Quadro novo do domingo à tarde: \"___ ou ___?\"",
-"A|No meu velório, quero ___ tocando no fundo.",
-"A|Meu terapeuta pediu demissão depois que eu contei sobre ___.",
-"A|___: o verdadeiro motivo do meu divórcio.",
-"A|Promoção do Atacadão: leve ___ e ganhe ___.",
-"A|Fui demitido por ___ na reunião do Teams.",
-"A|A CPI descobriu que o dinheiro foi gasto em ___.",
-"A|O apocalipse zumbi começou com ___.",
-"A|Minha última pesquisa no Google: \"como esconder ___ da minha mãe\".",
-"A|O que tem no porão do síndico? ___.",
-"A|Aqui jaz uma vítima de ___.",
-"S|Fui expulso do velório da minha própria avó por causa de ___.",
-"S|O que eu achei na gaveta do meu pai depois que ele morreu? ___.",
-"S|A fantasia sexual secreta do síndico: ___.",
-"S|O Samu chegou e encontrou ___.",
-"M|O novo slogan da campanha: \"Vote em mim, eu prometo ___.\"",
-"A|O vereador gastou a verba da merenda em ___.",
-"M|O milagre que o pastor promete nesta quarta-feira: ___.",
-"A|A penitência que o padre me deu depois da confissão: ___.",
-"M|O que eu quero gravado na minha lápide: ___.",
-"A|Meu plano funerário cobre ___, mas não cobre ___.",
-"A|O ditador do país vizinho declarou guerra por causa de ___.",
-"M|O áudio que a tia jura ser da NASA: \"___ vai acabar com o mundo amanhã.\"",
-"A|Primeira lei da nova seita: ___.",
-"A|O novo plano dos bilionários para salvar o planeta: ___.",
-"M|O golpe do Pix evoluiu: agora eles mandam ___.",
-"A|Fui preso na fronteira com o Paraguai carregando ___.",
-"A|O delegado não acreditou quando eu disse que ___ era para uso pessoal.",
-"A|Meu chefe chamou de \"oportunidade de crescimento\" ___.",
-"A|Motivo da minha justa causa: ___.",
-"A|No home office, ninguém sabe que eu estou com ___ durante a reunião.",
-"A|O agiota aceitou ___ como pagamento.",
-"A|O que estragou a ceia de Natal deste ano? ___.",
-"M|Diagnóstico do Dr. Google: ___.",
-"M|Assunto do momento no Twitter: ___.",
-"M|Legenda perfeita para o Instagram: \"___ #gratidão\".",
-"M|A ressaca de hoje foi patrocinada por ___.",
-"A|Ontem eu bebi ___ e acordei com ___.",
-"M|No meu tempo a gente não tinha ___, e era feliz.",
-"M|Reviravolta no último capítulo: a vilã era ___ o tempo todo.",
-"M|O paredão desta semana é entre ___ e ___.",
-"M|O prato mais caro do restaurante gourmet: ___ desconstruído.",
-"M|O motorista virou para trás e disse: \"A vida, meu amigo, é igual a ___.\"",
-"M|Mercúrio retrógrado é o culpado por ___.",
-"A|O meu signo explica ___."
+/* Formato: número | nível (M morno, A ácido, S sem perdão) | tipos | temas | texto
+   Tipos: o objeto, a ato, p pessoa, s situação, c conceito.
+   Nas perguntas, os tipos dizem o que cada lacuna aceita (separadas por /). */
+window.BARALHO={
+pretas:[
+"1|M|a|politica,cidade|Nova regra do condomínio: é proibido ___ depois das 22h.",
+"2|M|op|familia,nostalgia|O que o meu avô esconde no fundo do guarda-roupa? ___.",
+"3|M|opasc|mistico,dinheiro|O coach quântico garante: em 7 dias, ___ vai mudar a sua vida.",
+"4|M|ocs|politica,dinheiro|Urgente: o governo anuncia ___ para combater a inflação.",
+"5|M|op|absurdo|O que a NASA encontrou em Marte? ___.",
+"6|M|opasc|familia,tecnologia|Grupo da família, 6h da manhã: \"Bom dia! Compartilhem: ___\".",
+"7|M|oac|religiao|O pastor do Instagram jura que ___ cura qualquer coisa.",
+"8|M|po|tv|Trailer do novo filme nacional: \"Antes ele era só um homem. Agora ele é ___.\"",
+"9|M|oca|comida,familia|O verdadeiro segredo da receita da vó: ___.",
+"10|M|a|amor,tecnologia|Bio do meu Tinder: \"Gosto de viajar, comer bem e ___.\"",
+"11|M|a|absurdo|Novo esporte olímpico: ___.",
+"12|M|ao|dinheiro,tecnologia|A Faria Lima lançou um aplicativo de ___.",
+"13|M|opasc/opasc|mistico|Horóscopo de hoje: \"Cuidado com ___ e evite ___.\"",
+"14|M|oap|absurdo|Os alienígenas chegaram, e a primeira coisa que pediram foi ___.",
+"15|M|oac|dinheiro|O segredo da vida eterna, segundo um bilionário: ___.",
+"16|M|opasc/opasc|tv|Quadro novo do domingo à tarde: \"___ ou ___?\"",
+"17|A|opc|morte|No meu velório, quero ___ tocando no fundo.",
+"18|A|opasc|corpo|Meu terapeuta pediu demissão depois que eu contei sobre ___.",
+"19|A|opasc|amor|___: o verdadeiro motivo do meu divórcio.",
+"20|A|op/op|dinheiro,comida|Promoção do Atacadão: leve ___ e ganhe ___.",
+"21|A|as|trabalho,tecnologia|Fui demitido por ___ na reunião do Teams.",
+"22|A|osa|politica,crime|A CPI descobriu que o dinheiro foi gasto em ___.",
+"23|A|opasc|absurdo|O apocalipse zumbi começou com ___.",
+"24|A|ops|familia,tecnologia|Minha última pesquisa no Google: \"como esconder ___ da minha mãe\".",
+"25|A|ops|crime|O que tem no porão do síndico? ___.",
+"26|A|opasc|morte|Aqui jaz uma vítima de ___.",
+"27|S|opasc|morte,familia|Fui expulso do velório da minha própria avó por causa de ___.",
+"28|S|op|morte,familia|O que eu achei na gaveta do meu pai depois que ele morreu? ___.",
+"29|S|opasc|sexo|A fantasia sexual secreta do síndico: ___.",
+"30|S|ops|corpo|O Samu chegou e encontrou ___.",
+"31|M|opasc|politica|O novo slogan da campanha: \"Vote em mim, eu prometo ___.\"",
+"32|A|osa|politica,crime|O vereador gastou a verba da merenda em ___.",
+"33|M|scoa|religiao|O milagre que o pastor promete nesta quarta-feira: ___.",
+"34|A|as|religiao|A penitência que o padre me deu depois da confissão: ___.",
+"35|M|opasc|morte|O que eu quero gravado na minha lápide: ___.",
+"36|A|opasc/opasc|morte,dinheiro|Meu plano funerário cobre ___, mas não cobre ___.",
+"37|A|opasc|politica|O ditador do país vizinho declarou guerra por causa de ___.",
+"38|M|opcs|tecnologia,familia|O áudio que a tia jura ser da NASA: \"___ vai acabar com o mundo amanhã.\"",
+"39|A|acs|religiao|Primeira lei da nova seita: ___.",
+"40|A|aso|dinheiro|O novo plano dos bilionários para salvar o planeta: ___.",
+"41|M|op|crime,tecnologia|O golpe do Pix evoluiu: agora eles mandam ___.",
+"42|A|op|crime|Fui preso na fronteira com o Paraguai carregando ___.",
+"43|A|o|crime|O delegado não acreditou quando eu disse que ___ era para uso pessoal.",
+"44|A|sa|trabalho|Meu chefe chamou de \"oportunidade de crescimento\" ___.",
+"45|A|as|trabalho|Motivo da minha justa causa: ___.",
+"46|A|opc|trabalho,tecnologia|No home office, ninguém sabe que eu estou com ___ durante a reunião.",
+"47|A|opa|crime,dinheiro|O agiota aceitou ___ como pagamento.",
+"48|A|opasc|familia,comida|O que estragou a ceia de Natal deste ano? ___.",
+"49|M|cs|corpo,tecnologia|Diagnóstico do Dr. Google: ___.",
+"50|M|opasc|tecnologia|Assunto do momento no Twitter: ___.",
+"51|M|opasc|tecnologia|Legenda perfeita para o Instagram: \"___ #gratidão\".",
+"52|M|op|bebida|A ressaca de hoje foi patrocinada por ___.",
+"53|A|o/opc|bebida|Ontem eu bebi ___ e acordei com ___.",
+"54|M|oc|nostalgia|No meu tempo a gente não tinha ___, e era feliz.",
+"55|M|po|tv|Reviravolta no último capítulo: a vilã era ___ o tempo todo.",
+"56|M|po/po|tv|O paredão desta semana é entre ___ e ___.",
+"57|M|o|comida|O prato mais caro do restaurante gourmet: ___ desconstruído.",
+"58|M|opasc|cidade|O motorista virou para trás e disse: \"A vida, meu amigo, é igual a ___.\"",
+"59|M|opasc|mistico|Mercúrio retrógrado é o culpado por ___.",
+"60|A|opasc|mistico|O meu signo explica ___."
 ],
-brancas: [
-"M|Um consórcio de caixões.","M|A carteira de trabalho em formato de NFT.","M|O cheiro do metrô às 18h.","M|O INSS negando a minha morte.",
-"M|Um pastor vendendo terreno no céu em 12x sem juros.","M|Um robô aspirador com depressão.","M|Um bilionário que foi ao espaço e esqueceu de voltar.",
-"M|O grupo de WhatsApp dos meus ex.","M|Um gnomo fiscal da Receita Federal.","M|Um tamagotchi falecido.","M|Um padre fazendo live de videogame.",
-"M|Lamber a catraca do ônibus.","M|Uma mãe que acabou de descobrir o Pix.","M|O cachorro que herdou a casa toda.","M|Um testamento escrito só com emojis.",
-"M|Uma vaquinha online para pagar o agiota.","M|Um terraplanista caindo da borda.","M|Um porta-malas cheio de pinguins.","M|Pagar promessa de joelhos até o Detran.",
-"M|Uma lápide com QR Code.","M|Um extintor vencido e muita esperança.","M|Um coach que fica rico vendendo curso de como ficar rico.",
-"M|Um anão de jardim com ficha criminal.","M|O Fusca do apocalipse.",
-"A|O tio do pavê numa festa de swing.","A|Um ménage à trois com o Serasa.","A|Uma lipoaspiração feita no açougue.","A|Um influencer de colonoscopia.",
-"A|Peidar no elevador e culpar o bebê.","A|Um vibrador com Bluetooth que conectou no som do vizinho.","A|Cremar a vó e confundir com o tempero.",
-"A|Um velório open bar.","A|Uma suruba de contadores em pleno prazo do imposto de renda.","A|Um Uber que só aceita pagamento em rim.",
-"A|Leilão dos órgãos da família no Mercado Livre.","A|Uma conta de fotos de pé de tiozão.","A|Ser abduzido e devolvido sem os rins.",
-"A|Uma colonoscopia ao vivo no Instagram.","A|Fazer xixi na piscina olímpica.","A|Um deputado chorando abraçado a um cofre.",
-"A|Um enterro patrocinado por casa de apostas.","A|A sogra pelada no grupo da família, por engano.","A|Dois litros de Corote e um sonho.",
-"A|Um tatuador bêbado e uma palavra em chinês.","A|Uma placenta no freezer, ao lado do sorvete.","A|Um defunto sorrindo no caixão.",
-"A|Sexo selvagem com a porta da geladeira aberta.","A|Um travesseiro de corpo inteiro do meu ex.","A|Uma diarreia no meio do show.","A|A meia suada do pastor.",
-"S|Uma orgia no asilo com Viagra vencido.","S|Um velório com stripper contratado pelo próprio defunto.","S|Transar no carro funerário.",
-"S|Uma DR no meio do enterro.","S|Um teste de gravidez positivo no amigo secreto da firma.","S|O áudio de 7 minutos do meu pai detalhando o exame de próstata.",
-"S|Descobrir que o vovô tinha uma segunda família no Paraguai.","S|Um fetiche por boleto vencido.","S|A cueca freada do noivo no altar.",
-"S|Herdar só as dívidas e um papagaio que xinga a família.","S|Uma vasectomia feita pelo cunhado.","S|O nude do pastor vazado no grupo da igreja.",
-"S|Vomitar dentro do capacete do motoboy.","S|Doar o corpo para a ciência e a ciência devolver.","S|Pegar herpes na festa da firma.",
-"S|Um swing com os vizinhos que acabou em processo.","S|A urna do vovô sendo usada de cinzeiro.","S|Um amante escondido no guarda-roupa desde 2019.",
-"S|Toalhas de motel como lembrancinha de casamento.","S|Uma planilha contando os dias para a sogra morrer.","S|Um exame de fezes enviado no grupo errado.",
-"S|Um ménage com o síndico e o porteiro.","S|Acordar no meio do próprio velório e pedir o Pix das flores de volta.","S|Um vibrador entalado e a equipe do Samu rindo.",
-"S|Um enema de café com chantilly.",
-"M|Um deputado votando de pijama na sessão online.","A|Uma emenda parlamentar para reformar a piscina do vereador.","M|O horário eleitoral com jingle de pagode.",
-"A|Um candidato que beija o bebê e rouba a chupeta.","M|Uma CPI que termina em pizza de verdade, com borda recheada.","A|Uma rachadinha no amigo secreto da família.",
-"S|Um político prometendo metrô até a casa da amante.","A|Um laranja que acabou de descobrir que é laranja.","A|Um político condenado com tornozeleira de grife.",
-"M|A fila do INSS chegando à terceira geração.",
-"A|Um culto com maquininha de cartão no altar.","M|O dízimo parcelado em 12x no crédito.","M|Um padre confinado num reality show.",
-"A|Um pastor curando calvície com azeite da promoção.","M|Água benta com gosto de cloro de piscina.","M|Uma promessa paga com Pix agendado.",
-"A|Um anjo da guarda pedindo demissão.","A|O Juízo Final transmitido com patrocínio de casa de apostas.","M|Uma romaria até a lotérica.",
-"S|A confissão que fez o padre pedir transferência de paróquia.",
-"M|Um velório com o Wi-Fi melhor que o de casa.","A|Morrer justo no dia do pagamento.","A|Um caixão de papelão comprado na Shopee.",
-"A|Ser enterrado com o celular, e ele tocar no meio da missa.","S|Uma herança disputada no grito em cima do caixão.","A|Um médium cobrando a consulta do defunto.",
-"M|Um plano funerário com cashback.","M|Ler o próprio obituário com erro de português.","M|Um fantasma que só assombra a conta de luz.",
-"S|A Morte também esperando na fila do SUS.",
-"S|Um botão vermelho de míssil nuclear ao lado do controle da TV.","A|Uma seita que cultua o algoritmo do TikTok.",
-"M|Um ditador que exige ser chamado de \"meu rei\" no grupo do condomínio.","M|Um bunker anti-apocalipse com estoque só de miojo.",
-"M|Uma corrente de WhatsApp que explode o celular se não for repassada.","A|Um guru de seita que aceita cartão de crédito.",
-"M|O fim do mundo remarcado por falta de quórum.","A|Uma guerra nuclear começada por um emoji errado.",
-"M|Um bunker de bilionário com Wi-Fi ruim.","A|Um bilionário dono de rede social brigando com um adolescente às 3 da manhã.",
-"A|Um iate do tamanho de um bairro, ancorado em cima de um recife de coral.","A|O último urso polar fazendo publi de ar-condicionado.",
-"M|Uma pirâmide financeira de pastel de feira.","M|Um mafioso italiano tentando entender o boleto.","M|Um aquecimento global que chegou primeiro em Cuiabá.",
-"M|Um assaltante que pediu o Pix e esqueceu o celular com a vítima.","M|Um contrabandista do Paraguai com nota fiscal.","M|Lavar dinheiro numa lavanderia de verdade.",
-"A|Um traficante que aceita vale-refeição.","A|Um gato de TV a cabo puxado da casa do delegado.","M|Um DVD pirata do próprio casamento.",
-"A|Sonegar imposto declarando o cachorro como dependente.","A|Um sequestrador que aceita o resgate em 10x sem juros.","M|O tráfico de influência do síndico.",
-"S|Um ladrão de fio de cobre eletrocutado ao vivo no jornal.","M|Um laranja tão laranja que virou suco.","M|Um advogado de porta de cadeia com MBA.",
-"A|Um estágio não remunerado de 70 horas por semana.","M|Uma reunião de alinhamento sobre a próxima reunião.","M|Um chefe que manda áudio no domingo às 23h.",
-"M|Uma confraternização da firma com amigo secreto de R$ 10.","A|Um RH que demite com emoji de coração.","A|Pedir demissão por e-mail com cópia para a empresa inteira.",
-"A|Um \"somos uma família\" seguido de corte de 30% no salário.","A|Câmera desligada e calça também.","M|Um vale-refeição que só passa na padaria do chefe.",
-"M|Investir tudo em cripto de figurinha da Copa.","M|Um agiota com programa de fidelidade.","A|O nome no Serasa desde antes de nascer.",
-"M|Um golpista que caiu no golpe de outro golpista.","M|Um cartão de crédito com limite emocional.","A|Vender um rim para pagar o rodízio de sushi.",
-"A|Um coach financeiro devendo para a própria mãe.",
-"A|A tia do zap jurando que o arroz agora é feito na China.","A|O amigo secreto da família virando processo judicial.",
-"A|Um plano de saúde que só cobre doença que não existe.","M|Uma IA terapeuta afastada por burnout.","M|Um juiz que marcou pênalti por intuição espiritual.",
-"A|Um TCC inteiro feito no ChatGPT, inclusive a dedicatória.",
-"M|Um influencer cancelado por um tuíte de 2011.","M|Uma treta no Twitter que terminou em casamento.","M|O Twitter que todo mundo se recusa a chamar de X.",
-"A|Um filtro do Instagram que apaga a dívida do rosto.","A|Postar o próprio velório nos stories.","A|Um perfil fake no Instagram só para vigiar o ex.",
-"M|Um vídeo de academia às 5 da manhã, com legenda de superação.","M|Ser bloqueado pela própria mãe no Instagram.",
-"A|Um fio de 40 tuítes sobre como ficar rico, escrito por quem mora com a mãe.",
-"M|Um Engov tomado com cachaça.","A|A mensagem das 3 da manhã para o ex.","A|Acordar abraçado com o vaso sanitário.","M|\"Nunca mais eu bebo\", pela quarta vez no mês.",
-"A|Uma caipirinha feita com álcool de posto.","M|O tio que bebe dois copos e vira coach.","A|Acordar em Guarulhos sem lembrar como.",
-"A|Vomitar no Uber e pagar a taxa de limpeza em 3x.","M|Um open bar de casamento que acabou às 23h.","M|Beber água entre um copo e outro, só no discurso.",
-"A|A ressaca moral de um áudio de 6 minutos no grupo da família.","M|Um copo de cerveja quente esquecido no sol.","A|Uma tatuagem feita às 4 da manhã.",
-"A|Perder o celular, a chave e a dignidade na mesma noite.",
-"M|Um depoimento no Orkut que ninguém aprovou.","M|Ficar \"ausente\" no MSN para fazer charme.","M|Uma fita VHS rebobinada com a caneta Bic.",
-"M|Um Tamagotchi que morreu durante a aula.","M|Lan house às 2 da manhã, com Counter-Strike e salgadinho.","M|O barulho da internet discada acordando a casa toda.",
-"M|Um CD gravado com 15 músicas \"de amor\" para a crush.","M|Entrar na comunidade \"Eu odeio acordar cedo\".",
-"A|Um boomer dizendo que na época dele se aprendia apanhando.","A|Um tiozão contando que comprou casa com salário de estagiário.",
-"M|Um boomer pedindo para o neto \"entrar no Google\" para ele.","M|Um áudio do pai começando com \"Alô? Tá gravando?\".",
-"M|O avô que acha que o ChatGPT é uma pessoa presa no computador.","M|Uma corrente de e-mail que prometia sete anos de azar.",
-"M|Assoprar o cartucho do videogame.","A|Um boomer que acha que depressão se cura com enxada.",
-"M|Uma vilã que sobreviveu a três explosões.","M|O gêmeo malvado que aparece no capítulo final.","M|Um tapa na cara em câmera lenta, com trilha dramática.",
-"M|Uma amnésia conveniente bem na hora do casamento.","A|Um teste de DNA lido em voz alta no velório.","M|A mocinha que sofreu 200 capítulos para casar em 5 minutos.",
-"M|Um participante chorando no confessionário por causa de um pão.","M|Uma prova de resistência de 30 horas abraçado a um poste.",
-"A|Um participante cancelado antes do primeiro paredão.","A|Uma edição que transformou um \"bom dia\" em barraco.","A|Um casal formado e desfeito na mesma festa do reality.",
-"M|O apresentador fazendo um discurso de eliminação de 20 minutos.","A|Um ex-participante de reality vendendo chá emagrecedor.","M|Votar 4 mil vezes para tirar alguém do programa.",
-"M|Um hambúrguer gourmet de R$ 89 que não enche a boca.","M|Uma espuma de nada, servida numa telha.","M|A vó que não aceita \"estou sem fome\" como resposta.",
-"M|O tio que estraga o churrasco dizendo que carne boa não precisa de sal.","A|Um sushi de posto de gasolina.","M|Um pastel de vento: 90% ar e 10% esperança.",
-"M|Arroz com uva-passa no Natal, o crime que ninguém pune.","M|Um miojo gourmetizado por um chef francês.","M|Um prato que o garçom descreveu por cinco minutos e cabe numa colher.",
-"A|A marmita de peixe esquentada no micro-ondas da firma.","M|Um rodízio de pizza com 40 sabores doces.","M|Um buffet por quilo pesado com a mão do atendente junto.",
-"A|Uma intoxicação alimentar no casamento do primo.","M|Uma coxinha de frango sem frango.",
-"M|Um motorista explicando a crise do Oriente Médio em 15 minutos.","M|Um motorista que é ex-engenheiro, ex-coach e futuro deputado.",
-"M|Uma bala de menta oferecida junto com um sermão sobre a vida.","A|Um motorista que jura que o GPS é uma conspiração.","M|Uma corrida de 10 minutos que virou sessão de terapia.",
-"M|Louvor no volume máximo às 6 da manhã.","M|Um motorista que cancela depois de 15 minutos parado na porta.","M|Dar 5 estrelas por medo do motorista.",
-"M|Um motorista com um plano secreto para acabar com o trânsito.","A|O motorista contando os detalhes do próprio divórcio.","M|Um carro com aromatizante de pinho e cheiro de cigarro.",
-"M|Uma \"rota alternativa\" que passou por três municípios.",
-"M|Mercúrio retrógrado.","M|Um mapa astral que explicou por que eu devo para o agiota.","A|Culpar o ascendente em escorpião pela traição.",
-"M|Um geminiano com duas personalidades e nenhuma decisão.","M|Um signo incompatível com o boleto.","M|Uma astróloga cobrando no Pix para ler a lua.",
-"M|Uma lua em câncer chorando com comercial de margarina.","M|Um leonino que posta foto no espelho todo dia.","A|Terminar o namoro porque o horóscopo mandou.",
-"M|Um virginiano organizando a gaveta de meias por cor.","A|Um capricorniano que planejou o próprio velório em planilha.","M|Um sagitariano sumido há três semanas, viajando.",
-"M|O céu inteiro conspirando contra a minha conta bancária.","A|Um escorpiano guardando print de 2014.",
-"M|Um ornitorrinco: mamífero que bota ovo, tem bico de pato, esporão venenoso e brilha no escuro sob luz ultravioleta.",
-"M|Um vombate, o bicho que faz cocô em formato de cubo.","M|Um polvo com três corações, sangue azul e mais inteligência que o meu chefe.",
-"S|Um pinto.","S|Um masturbador comprado na Amazon.","S|Sexo anal.","A|Fetiche em pés.","S|Um plug anal com pedrinha brilhante.","A|Uma algema de pelúcia.","A|Um vibrador sem pilha.","A|Uma camisinha vencida.","S|Um consolo de 30 centímetros.","A|Um chicotinho de couro.","A|Um gel de massagem sabor morango.","S|Uma boneca inflável furada.","A|Uma calcinha comestível.","A|Uma fantasia de enfermeira.","S|Uma punheta no banho.","A|Um nude mal enquadrado.","A|Um chupão no pescoço.","S|Um 69.","A|Fetiche em uniforme de time.","A|Um teste de gravidez.","M|Uma dentadura.","M|Uma peruca.","M|Um pote de sorvete cheio de feijão.","M|Um controle remoto embrulhado em plástico.","M|Um pé de cabra.","M|Uma pochete.","M|Um cortador de unha.","M|Uma cueca furada.","M|Um sutiã de bojo.","M|Uma sacola cheia de sacolas.","M|Um galão de água vazio.","M|Uma motosserra.","M|Um crucifixo.","M|Uma pá.","A|Uma lona preta e um saco de cal virgem.","M|Uma faca de churrasco.","M|Um bilhete de loteria premiado.","M|Um pacote de miojo.","M|Um chinelo de dedo.","M|Uma calculadora científica.","M|Um patinho de borracha.","M|Uma vela de aniversário.","A|Um rim num isopor.","M|Um diário com cadeado.","M|A camiseta de um político da eleição passada."
+brancas:[
+"1|M|c|morte,dinheiro|Um consórcio de caixões.",
+"2|M|o|trabalho,tecnologia|A carteira de trabalho em formato de NFT.",
+"3|M|c|corpo,cidade|O cheiro do metrô às 18h.",
+"4|M|s|morte,politica|O INSS negando a minha morte.",
+"5|M|p|religiao,dinheiro|Um pastor vendendo terreno no céu em 12x sem juros.",
+"6|M|o|tecnologia,absurdo|Um robô aspirador com depressão.",
+"7|M|p|dinheiro,absurdo|Um bilionário que foi ao espaço e esqueceu de voltar.",
+"8|M|c|amor,tecnologia|O grupo de WhatsApp dos meus ex.",
+"9|M|p|politica,dinheiro,absurdo|Um gnomo fiscal da Receita Federal.",
+"10|M|o|nostalgia,morte|Um tamagotchi falecido.",
+"11|M|s|religiao,tecnologia|Um padre fazendo live de videogame.",
+"12|M|a|cidade,corpo|Lamber a catraca do ônibus.",
+"13|M|p|familia,tecnologia|Uma mãe que acabou de descobrir o Pix.",
+"14|M|p|familia,dinheiro|O cachorro que herdou a casa toda.",
+"15|M|o|morte,tecnologia|Um testamento escrito só com emojis.",
+"16|M|s|dinheiro,crime|Uma vaquinha online para pagar o agiota.",
+"17|M|p|absurdo|Um terraplanista caindo da borda.",
+"18|M|o|absurdo|Um porta-malas cheio de pinguins.",
+"19|M|a|religiao,absurdo|Pagar promessa de joelhos até o Detran.",
+"20|M|o|morte,tecnologia|Uma lápide com QR Code.",
+"21|M|o|absurdo|Um extintor vencido e muita esperança.",
+"22|M|p|trabalho,dinheiro|Um coach que fica rico vendendo curso de como ficar rico.",
+"23|M|p|crime,absurdo|Um anão de jardim com ficha criminal.",
+"24|M|o|absurdo|O Fusca do apocalipse.",
+"25|A|p|familia,sexo|O tio do pavê numa festa de swing.",
+"26|A|s|sexo,dinheiro|Um ménage à trois com o Serasa.",
+"27|A|s|corpo|Uma lipoaspiração feita no açougue.",
+"28|A|p|tecnologia,corpo|Um influencer de colonoscopia.",
+"29|A|a|corpo,familia|Peidar no elevador e culpar o bebê.",
+"30|A|o|sexo,tecnologia|Um vibrador com Bluetooth que conectou no som do vizinho.",
+"31|A|a|morte,familia,comida|Cremar a vó e confundir com o tempero.",
+"32|A|s|morte,bebida|Um velório open bar.",
+"33|A|s|sexo,trabalho,dinheiro|Uma suruba de contadores em pleno prazo do imposto de renda.",
+"34|A|p|cidade,corpo|Um Uber que só aceita pagamento em rim.",
+"35|A|s|morte,familia,dinheiro|Leilão dos órgãos da família no Mercado Livre.",
+"36|A|o|corpo,tecnologia|Uma conta de fotos de pé de tiozão.",
+"37|A|a|absurdo,corpo|Ser abduzido e devolvido sem os rins.",
+"38|A|s|corpo,tecnologia|Uma colonoscopia ao vivo no Instagram.",
+"39|A|a|corpo|Fazer xixi na piscina olímpica.",
+"40|A|p|politica,dinheiro|Um deputado chorando abraçado a um cofre.",
+"41|A|s|morte,dinheiro|Um enterro patrocinado por casa de apostas.",
+"42|A|s|familia,sexo,tecnologia|A sogra pelada no grupo da família, por engano.",
+"43|A|o|bebida|Dois litros de Corote e um sonho.",
+"44|A|p|corpo,bebida|Um tatuador bêbado e uma palavra em chinês.",
+"45|A|o|corpo,comida,familia|Uma placenta no freezer, ao lado do sorvete.",
+"46|A|p|morte|Um defunto sorrindo no caixão.",
+"47|A|a|sexo|Sexo selvagem com a porta da geladeira aberta.",
+"48|A|o|amor,sexo|Um travesseiro de corpo inteiro do meu ex.",
+"49|A|s|corpo|Uma diarreia no meio do show.",
+"50|A|o|religiao,corpo|A meia suada do pastor.",
+"51|S|s|sexo,corpo|Uma orgia no asilo com Viagra vencido.",
+"52|S|s|morte,sexo|Um velório com stripper contratado pelo próprio defunto.",
+"53|S|a|sexo,morte|Transar no carro funerário.",
+"54|S|s|amor,morte|Uma DR no meio do enterro.",
+"55|S|s|sexo,trabalho|Um teste de gravidez positivo no amigo secreto da firma.",
+"56|S|o|familia,corpo,tecnologia|O áudio de 7 minutos do meu pai detalhando o exame de próstata.",
+"57|S|a|familia,amor|Descobrir que o vovô tinha uma segunda família no Paraguai.",
+"58|S|c|sexo,dinheiro|Um fetiche por boleto vencido.",
+"59|S|o|corpo,amor|A cueca freada do noivo no altar.",
+"60|S|a|familia,dinheiro|Herdar só as dívidas e um papagaio que xinga a família.",
+"61|S|s|corpo,familia|Uma vasectomia feita pelo cunhado.",
+"62|S|s|religiao,sexo,tecnologia|O nude do pastor vazado no grupo da igreja.",
+"63|S|a|bebida,cidade,corpo|Vomitar dentro do capacete do motoboy.",
+"64|S|a|morte,absurdo|Doar o corpo para a ciência e a ciência devolver.",
+"65|S|a|sexo,corpo,trabalho|Pegar herpes na festa da firma.",
+"66|S|s|sexo,crime|Um swing com os vizinhos que acabou em processo.",
+"67|S|s|morte,familia|A urna do vovô sendo usada de cinzeiro.",
+"68|S|p|amor,sexo|Um amante escondido no guarda-roupa desde 2019.",
+"69|S|o|amor,sexo|Toalhas de motel como lembrancinha de casamento.",
+"70|S|o|morte,familia|Uma planilha contando os dias para a sogra morrer.",
+"71|S|o|corpo,tecnologia|Um exame de fezes enviado no grupo errado.",
+"72|S|s|sexo|Um ménage com o síndico e o porteiro.",
+"73|S|a|morte,dinheiro|Acordar no meio do próprio velório e pedir o Pix das flores de volta.",
+"74|S|s|sexo,corpo|Um vibrador entalado e a equipe do Samu rindo.",
+"75|S|a|corpo,comida|Um enema de café com chantilly.",
+"76|M|p|politica,tecnologia|Um deputado votando de pijama na sessão online.",
+"77|A|c|politica,dinheiro|Uma emenda parlamentar para reformar a piscina do vereador.",
+"78|M|s|politica,tv|O horário eleitoral com jingle de pagode.",
+"79|A|p|politica,crime|Um candidato que beija o bebê e rouba a chupeta.",
+"80|M|s|politica,comida|Uma CPI que termina em pizza de verdade, com borda recheada.",
+"81|A|s|politica,familia,crime|Uma rachadinha no amigo secreto da família.",
+"82|S|p|politica,amor|Um político prometendo metrô até a casa da amante.",
+"83|A|p|politica,crime|Um laranja que acabou de descobrir que é laranja.",
+"84|A|p|politica,crime|Um político condenado com tornozeleira de grife.",
+"85|M|s|politica,dinheiro|A fila do INSS chegando à terceira geração.",
+"86|A|s|religiao,dinheiro|Um culto com maquininha de cartão no altar.",
+"87|M|c|religiao,dinheiro|O dízimo parcelado em 12x no crédito.",
+"88|M|p|religiao,tv|Um padre confinado num reality show.",
+"89|A|p|religiao|Um pastor curando calvície com azeite da promoção.",
+"90|M|o|religiao|Água benta com gosto de cloro de piscina.",
+"91|M|c|religiao,dinheiro|Uma promessa paga com Pix agendado.",
+"92|A|p|religiao,trabalho|Um anjo da guarda pedindo demissão.",
+"93|A|s|religiao,morte|O Juízo Final transmitido com patrocínio de casa de apostas.",
+"94|M|a|religiao,dinheiro|Uma romaria até a lotérica.",
+"95|S|c|religiao,sexo|A confissão que fez o padre pedir transferência de paróquia.",
+"96|M|s|morte,tecnologia|Um velório com o Wi-Fi melhor que o de casa.",
+"97|A|a|morte,dinheiro|Morrer justo no dia do pagamento.",
+"98|A|o|morte,tecnologia|Um caixão de papelão comprado na Shopee.",
+"99|A|a|morte,religiao,tecnologia|Ser enterrado com o celular, e ele tocar no meio da missa.",
+"100|S|s|morte,familia,dinheiro|Uma herança disputada no grito em cima do caixão.",
+"101|A|p|morte,mistico,dinheiro|Um médium cobrando a consulta do defunto.",
+"102|M|c|morte,dinheiro|Um plano funerário com cashback.",
+"103|M|a|morte|Ler o próprio obituário com erro de português.",
+"104|M|p|mistico,dinheiro|Um fantasma que só assombra a conta de luz.",
+"105|S|s|morte,politica|A Morte também esperando na fila do SUS.",
+"106|S|o|politica,absurdo|Um botão vermelho de míssil nuclear ao lado do controle da TV.",
+"107|A|c|religiao,tecnologia|Uma seita que cultua o algoritmo do TikTok.",
+"108|M|p|politica|Um ditador que exige ser chamado de \"meu rei\" no grupo do condomínio.",
+"109|M|o|absurdo,comida|Um bunker anti-apocalipse com estoque só de miojo.",
+"110|M|o|tecnologia,mistico|Uma corrente de WhatsApp que explode o celular se não for repassada.",
+"111|A|p|religiao,dinheiro|Um guru de seita que aceita cartão de crédito.",
+"112|M|s|absurdo|O fim do mundo remarcado por falta de quórum.",
+"113|A|s|politica,tecnologia|Uma guerra nuclear começada por um emoji errado.",
+"114|M|o|dinheiro,tecnologia|Um bunker de bilionário com Wi-Fi ruim.",
+"115|A|p|dinheiro,tecnologia|Um bilionário dono de rede social brigando com um adolescente às 3 da manhã.",
+"116|A|o|dinheiro|Um iate do tamanho de um bairro, ancorado em cima de um recife de coral.",
+"117|A|p|absurdo|O último urso polar fazendo publi de ar-condicionado.",
+"118|M|c|dinheiro,comida,crime|Uma pirâmide financeira de pastel de feira.",
+"119|M|p|crime,dinheiro|Um mafioso italiano tentando entender o boleto.",
+"120|M|c|absurdo|Um aquecimento global que chegou primeiro em Cuiabá.",
+"121|M|p|crime,tecnologia|Um assaltante que pediu o Pix e esqueceu o celular com a vítima.",
+"122|M|p|crime|Um contrabandista do Paraguai com nota fiscal.",
+"123|M|a|crime,dinheiro|Lavar dinheiro numa lavanderia de verdade.",
+"124|A|p|crime|Um traficante que aceita vale-refeição.",
+"125|A|o|crime|Um gato de TV a cabo puxado da casa do delegado.",
+"126|M|o|nostalgia,crime,amor|Um DVD pirata do próprio casamento.",
+"127|A|a|crime,dinheiro|Sonegar imposto declarando o cachorro como dependente.",
+"128|A|p|crime,dinheiro|Um sequestrador que aceita o resgate em 10x sem juros.",
+"129|M|c|politica,crime|O tráfico de influência do síndico.",
+"130|S|p|crime,morte,tv|Um ladrão de fio de cobre eletrocutado ao vivo no jornal.",
+"131|M|p|crime|Um laranja tão laranja que virou suco.",
+"132|M|p|crime,trabalho|Um advogado de porta de cadeia com MBA.",
+"133|A|s|trabalho|Um estágio não remunerado de 70 horas por semana.",
+"134|M|s|trabalho|Uma reunião de alinhamento sobre a próxima reunião.",
+"135|M|p|trabalho|Um chefe que manda áudio no domingo às 23h.",
+"136|M|s|trabalho|Uma confraternização da firma com amigo secreto de R$ 10.",
+"137|A|p|trabalho|Um RH que demite com emoji de coração.",
+"138|A|a|trabalho|Pedir demissão por e-mail com cópia para a empresa inteira.",
+"139|A|s|trabalho,dinheiro|Um \"somos uma família\" seguido de corte de 30% no salário.",
+"140|A|s|trabalho,corpo|Câmera desligada e calça também.",
+"141|M|o|trabalho|Um vale-refeição que só passa na padaria do chefe.",
+"142|M|a|dinheiro,tecnologia|Investir tudo em cripto de figurinha da Copa.",
+"143|M|p|crime,dinheiro|Um agiota com programa de fidelidade.",
+"144|A|s|dinheiro|O nome no Serasa desde antes de nascer.",
+"145|M|p|crime|Um golpista que caiu no golpe de outro golpista.",
+"146|M|o|dinheiro|Um cartão de crédito com limite emocional.",
+"147|A|a|corpo,dinheiro,comida|Vender um rim para pagar o rodízio de sushi.",
+"148|A|p|dinheiro,familia|Um coach financeiro devendo para a própria mãe.",
+"149|A|p|familia,tecnologia|A tia do zap jurando que o arroz agora é feito na China.",
+"150|A|s|familia,crime|O amigo secreto da família virando processo judicial.",
+"151|A|c|dinheiro,corpo|Um plano de saúde que só cobre doença que não existe.",
+"152|M|p|tecnologia|Uma IA terapeuta afastada por burnout.",
+"153|M|p|absurdo,mistico|Um juiz que marcou pênalti por intuição espiritual.",
+"154|A|o|tecnologia|Um TCC inteiro feito no ChatGPT, inclusive a dedicatória.",
+"155|M|p|tecnologia|Um influencer cancelado por um tuíte de 2011.",
+"156|M|s|tecnologia,amor|Uma treta no Twitter que terminou em casamento.",
+"157|M|c|tecnologia|O Twitter que todo mundo se recusa a chamar de X.",
+"158|A|o|tecnologia,dinheiro|Um filtro do Instagram que apaga a dívida do rosto.",
+"159|A|a|morte,tecnologia|Postar o próprio velório nos stories.",
+"160|A|o|amor,tecnologia|Um perfil fake no Instagram só para vigiar o ex.",
+"161|M|o|tecnologia,corpo|Um vídeo de academia às 5 da manhã, com legenda de superação.",
+"162|M|a|familia,tecnologia|Ser bloqueado pela própria mãe no Instagram.",
+"163|A|c|tecnologia,dinheiro,familia|Um fio de 40 tuítes sobre como ficar rico, escrito por quem mora com a mãe.",
+"164|M|o|bebida|Um Engov tomado com cachaça.",
+"165|A|o|amor,bebida,tecnologia|A mensagem das 3 da manhã para o ex.",
+"166|A|a|bebida|Acordar abraçado com o vaso sanitário.",
+"167|M|c|bebida|\"Nunca mais eu bebo\", pela quarta vez no mês.",
+"168|A|o|bebida|Uma caipirinha feita com álcool de posto.",
+"169|M|p|bebida,familia|O tio que bebe dois copos e vira coach.",
+"170|A|a|bebida|Acordar em Guarulhos sem lembrar como.",
+"171|A|a|bebida,cidade|Vomitar no Uber e pagar a taxa de limpeza em 3x.",
+"172|M|s|bebida|Um open bar de casamento que acabou às 23h.",
+"173|M|a|bebida|Beber água entre um copo e outro, só no discurso.",
+"174|A|c|bebida,familia|A ressaca moral de um áudio de 6 minutos no grupo da família.",
+"175|M|o|bebida|Um copo de cerveja quente esquecido no sol.",
+"176|A|o|bebida,corpo|Uma tatuagem feita às 4 da manhã.",
+"177|A|a|bebida|Perder o celular, a chave e a dignidade na mesma noite.",
+"178|M|o|nostalgia,tecnologia|Um depoimento no Orkut que ninguém aprovou.",
+"179|M|a|nostalgia,tecnologia|Ficar \"ausente\" no MSN para fazer charme.",
+"180|M|o|nostalgia|Uma fita VHS rebobinada com a caneta Bic.",
+"181|M|o|nostalgia|Um Tamagotchi que morreu durante a aula.",
+"182|M|s|nostalgia,tecnologia|Lan house às 2 da manhã, com Counter-Strike e salgadinho.",
+"183|M|c|nostalgia,tecnologia|O barulho da internet discada acordando a casa toda.",
+"184|M|o|nostalgia,amor|Um CD gravado com 15 músicas \"de amor\" para a crush.",
+"185|M|a|nostalgia,tecnologia|Entrar na comunidade \"Eu odeio acordar cedo\".",
+"186|A|p|nostalgia,familia|Um boomer dizendo que na época dele se aprendia apanhando.",
+"187|A|p|nostalgia,dinheiro|Um tiozão contando que comprou casa com salário de estagiário.",
+"188|M|p|nostalgia,tecnologia|Um boomer pedindo para o neto \"entrar no Google\" para ele.",
+"189|M|o|familia,tecnologia|Um áudio do pai começando com \"Alô? Tá gravando?\".",
+"190|M|p|familia,tecnologia|O avô que acha que o ChatGPT é uma pessoa presa no computador.",
+"191|M|o|nostalgia,tecnologia,mistico|Uma corrente de e-mail que prometia sete anos de azar.",
+"192|M|a|nostalgia|Assoprar o cartucho do videogame.",
+"193|A|p|nostalgia,corpo|Um boomer que acha que depressão se cura com enxada.",
+"194|M|p|tv|Uma vilã que sobreviveu a três explosões.",
+"195|M|p|tv|O gêmeo malvado que aparece no capítulo final.",
+"196|M|a|tv|Um tapa na cara em câmera lenta, com trilha dramática.",
+"197|M|s|tv,amor|Uma amnésia conveniente bem na hora do casamento.",
+"198|A|s|tv,familia,morte|Um teste de DNA lido em voz alta no velório.",
+"199|M|p|tv,amor|A mocinha que sofreu 200 capítulos para casar em 5 minutos.",
+"200|M|p|tv,comida|Um participante chorando no confessionário por causa de um pão.",
+"201|M|a|tv|Uma prova de resistência de 30 horas abraçado a um poste.",
+"202|A|p|tv|Um participante cancelado antes do primeiro paredão.",
+"203|A|s|tv|Uma edição que transformou um \"bom dia\" em barraco.",
+"204|A|s|tv,amor|Um casal formado e desfeito na mesma festa do reality.",
+"205|M|s|tv|O apresentador fazendo um discurso de eliminação de 20 minutos.",
+"206|A|p|tv,dinheiro|Um ex-participante de reality vendendo chá emagrecedor.",
+"207|M|a|tv|Votar 4 mil vezes para tirar alguém do programa.",
+"208|M|o|comida,dinheiro|Um hambúrguer gourmet de R$ 89 que não enche a boca.",
+"209|M|o|comida|Uma espuma de nada, servida numa telha.",
+"210|M|p|familia,comida|A vó que não aceita \"estou sem fome\" como resposta.",
+"211|M|p|familia,comida|O tio que estraga o churrasco dizendo que carne boa não precisa de sal.",
+"212|A|o|comida|Um sushi de posto de gasolina.",
+"213|M|o|comida|Um pastel de vento: 90% ar e 10% esperança.",
+"214|M|o|comida,familia|Arroz com uva-passa no Natal, o crime que ninguém pune.",
+"215|M|o|comida|Um miojo gourmetizado por um chef francês.",
+"216|M|o|comida|Um prato que o garçom descreveu por cinco minutos e cabe numa colher.",
+"217|A|o|comida,trabalho|A marmita de peixe esquentada no micro-ondas da firma.",
+"218|M|s|comida|Um rodízio de pizza com 40 sabores doces.",
+"219|M|s|comida|Um buffet por quilo pesado com a mão do atendente junto.",
+"220|A|s|comida,corpo,familia|Uma intoxicação alimentar no casamento do primo.",
+"221|M|o|comida|Uma coxinha de frango sem frango.",
+"222|M|p|cidade,politica|Um motorista explicando a crise do Oriente Médio em 15 minutos.",
+"223|M|p|cidade,trabalho|Um motorista que é ex-engenheiro, ex-coach e futuro deputado.",
+"224|M|o|cidade|Uma bala de menta oferecida junto com um sermão sobre a vida.",
+"225|A|p|cidade,absurdo|Um motorista que jura que o GPS é uma conspiração.",
+"226|M|s|cidade|Uma corrida de 10 minutos que virou sessão de terapia.",
+"227|M|s|religiao,cidade|Louvor no volume máximo às 6 da manhã.",
+"228|M|p|cidade|Um motorista que cancela depois de 15 minutos parado na porta.",
+"229|M|a|cidade|Dar 5 estrelas por medo do motorista.",
+"230|M|p|cidade|Um motorista com um plano secreto para acabar com o trânsito.",
+"231|A|p|cidade,amor|O motorista contando os detalhes do próprio divórcio.",
+"232|M|o|cidade|Um carro com aromatizante de pinho e cheiro de cigarro.",
+"233|M|s|cidade|Uma \"rota alternativa\" que passou por três municípios.",
+"234|M|c|mistico|Mercúrio retrógrado.",
+"235|M|s|mistico,dinheiro|Um mapa astral que explicou por que eu devo para o agiota.",
+"236|A|a|mistico,amor|Culpar o ascendente em escorpião pela traição.",
+"237|M|p|mistico|Um geminiano com duas personalidades e nenhuma decisão.",
+"238|M|p|mistico,dinheiro|Um signo incompatível com o boleto.",
+"239|M|p|mistico,dinheiro|Uma astróloga cobrando no Pix para ler a lua.",
+"240|M|p|mistico|Uma lua em câncer chorando com comercial de margarina.",
+"241|M|p|mistico|Um leonino que posta foto no espelho todo dia.",
+"242|A|a|mistico,amor|Terminar o namoro porque o horóscopo mandou.",
+"243|M|p|mistico|Um virginiano organizando a gaveta de meias por cor.",
+"244|A|p|mistico,morte|Um capricorniano que planejou o próprio velório em planilha.",
+"245|M|p|mistico|Um sagitariano sumido há três semanas, viajando.",
+"246|M|c|mistico,dinheiro|O céu inteiro conspirando contra a minha conta bancária.",
+"247|A|p|mistico,amor|Um escorpiano guardando print de 2014.",
+"248|M|p|absurdo|Um ornitorrinco: mamífero que bota ovo, tem bico de pato, esporão venenoso e brilha no escuro sob luz ultravioleta.",
+"249|M|p|absurdo,corpo|Um vombate, o bicho que faz cocô em formato de cubo.",
+"250|M|p|absurdo,trabalho|Um polvo com três corações, sangue azul e mais inteligência que o meu chefe.",
+"251|S|o|sexo,corpo|Um pinto.",
+"252|S|o|sexo,tecnologia|Um masturbador comprado na Amazon.",
+"253|S|a|sexo|Sexo anal.",
+"254|A|c|sexo,corpo|Fetiche em pés.",
+"255|S|o|sexo|Um plug anal com pedrinha brilhante.",
+"256|A|o|sexo|Uma algema de pelúcia.",
+"257|A|o|sexo|Um vibrador sem pilha.",
+"258|A|o|sexo|Uma camisinha vencida.",
+"259|S|o|sexo|Um consolo de 30 centímetros.",
+"260|A|o|sexo|Um chicotinho de couro.",
+"261|A|o|sexo|Um gel de massagem sabor morango.",
+"262|S|o|sexo|Uma boneca inflável furada.",
+"263|A|o|sexo,comida|Uma calcinha comestível.",
+"264|A|o|sexo|Uma fantasia de enfermeira.",
+"265|S|a|sexo|Uma punheta no banho.",
+"266|A|o|sexo,tecnologia|Um nude mal enquadrado.",
+"267|A|c|sexo,corpo|Um chupão no pescoço.",
+"268|S|a|sexo|Um 69.",
+"269|A|c|sexo|Fetiche em uniforme de time.",
+"270|A|o|sexo,familia|Um teste de gravidez.",
+"271|M|o|corpo|Uma dentadura.",
+"272|M|o|corpo|Uma peruca.",
+"273|M|o|comida,familia|Um pote de sorvete cheio de feijão.",
+"274|M|o|familia,nostalgia|Um controle remoto embrulhado em plástico.",
+"275|M|o|crime|Um pé de cabra.",
+"276|M|o|nostalgia|Uma pochete.",
+"277|M|o|corpo|Um cortador de unha.",
+"278|M|o|corpo|Uma cueca furada.",
+"279|M|o|corpo|Um sutiã de bojo.",
+"280|M|o|familia|Uma sacola cheia de sacolas.",
+"281|M|o|absurdo|Um galão de água vazio.",
+"282|M|o|crime,morte|Uma motosserra.",
+"283|M|o|religiao|Um crucifixo.",
+"284|M|o|morte,crime|Uma pá.",
+"285|A|o|crime,morte|Uma lona preta e um saco de cal virgem.",
+"286|M|o|comida,crime|Uma faca de churrasco.",
+"287|M|o|dinheiro|Um bilhete de loteria premiado.",
+"288|M|o|comida|Um pacote de miojo.",
+"289|M|o|familia|Um chinelo de dedo.",
+"290|M|o|nostalgia|Uma calculadora científica.",
+"291|M|o|absurdo|Um patinho de borracha.",
+"292|M|o|absurdo|Uma vela de aniversário.",
+"293|A|o|crime,corpo|Um rim num isopor.",
+"294|M|o|nostalgia,amor|Um diário com cadeado.",
+"295|M|o|politica|A camiseta de um político da eleição passada."
 ]};
 
 </script>
@@ -276,13 +478,14 @@ mark{background:none;color:var(--quente);font-weight:900}
 .fone .resposta{animation:none}
 .resposta:disabled{opacity:.4;cursor:not-allowed}
 button.resposta{cursor:pointer;font:inherit}
+.carta-mao .num{position:absolute;left:14px;bottom:7px;font-size:11px;font-weight:800;letter-spacing:.06em;opacity:.45}
 button.resposta[aria-pressed="true"]{border-color:var(--quente)}
 .vitoria{display:grid;gap:10px}
 .vitoria .quem{font-family:var(--f-sigla);font-size:clamp(30px,4vw,48px);color:var(--quente);line-height:1}
 
 /* Mão */
 .mao{display:grid;gap:8px}
-.carta-mao{position:relative;background:var(--branca);color:var(--tinta);border-radius:12px;padding:13px 44px 13px 14px;font-weight:800;font-size:16.5px;line-height:1.25;text-align:left;border:3px solid transparent;min-height:56px}
+.carta-mao{position:relative;background:var(--branca);color:var(--tinta);border-radius:12px;padding:13px 44px 24px 14px;font-weight:800;font-size:16.5px;line-height:1.25;text-align:left;border:3px solid transparent;min-height:56px}
 .carta-mao[aria-pressed="true"]{border-color:var(--quente)}
 .carta-mao .n{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--quente);color:#fff;font-weight:900;display:grid;place-items:center;font-size:14px}
 .carta-mao.descartar{opacity:.45;text-decoration:line-through;border-color:#999}
@@ -331,6 +534,8 @@ const abrir=k=>{try{return JSON.parse(localStorage.getItem(k)||"null");}catch(e)
 const arr=v=>Array.isArray(v)?v:(v&&typeof v==="object"?Object.keys(v).sort((a,b)=>a-b).map(k=>v[k]):[]);
 function novoCodigo(){const L="BCDFGHJKLMNPQRSTVWXZ";let c="";for(let i=0;i<4;i++)c+=L[sorte(L.length)];return c;}
 const lacunas=t=>Math.max(1,t.split("___").length-1);
+/* carta do baralho: "número|nível|tipos|temas|texto" */
+const ler=l=>{const f=l.split("|");return {n:+f[0],nv:f[1],tp:f[2],th:f[3]?f[3].split(","):[],t:f.slice(4).join("|")};};
 
 /* encaixa as respostas nas lacunas */
 function ajustar(resp,antes){
@@ -405,10 +610,10 @@ function nomeDe(id){const p=jogadores().find(x=>x.id===id);return p?p.nome:(h.no
 
 function montarBaralho(){
   const B=window.BARALHO, br=[], pr=[];
-  B.brancas.forEach((l,i)=>{const n=l[0];if(h.niveis[n])br.push({id:"b"+i,t:l.slice(2)});});
-  B.pretas.forEach((l,i)=>{const n=l[0];if(h.niveis[n])pr.push({id:"p"+i,t:l.slice(2)});});
+  B.brancas.map(ler).forEach(c=>{if(h.niveis[c.nv])br.push({id:"b"+c.n,n:c.n,tp:c.tp,t:c.t});});
+  B.pretas.map(ler).forEach(c=>{if(h.niveis[c.nv])pr.push({id:"p"+c.n,n:c.n,tp:c.tp,t:c.t});});
   if(h.niveis.T){
-    h.turmaB.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((t,i)=>br.push({id:"tb"+i,t}));
+    h.turmaB.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((t,i)=>br.push({id:"tb"+i,tp:"opasc",t}));
     h.turmaP.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).forEach((t,i)=>pr.push({id:"tp"+i,t:t.indexOf("___")>=0?t:t.replace(/[.?!]?$/,"")+": ___."}));
   }
   h.brancas=br; h.pretas=pr;
@@ -416,11 +621,22 @@ function montarBaralho(){
 }
 const textoB=id=>{const c=h.brancas.find(x=>x.id===id);return c?c.t:"";};
 const textoP=id=>{const c=h.pretas.find(x=>x.id===id);return c?c.t:"";};
-function comprarB(){ if(!h.monteB.length){h.monteB=embaralha(h.usadasB);h.usadasB=[];} return h.monteB.shift(); }
+/* compra misturando os tipos: procura, entre as próximas cartas do monte,
+   uma do tipo que a mão tem menos (objeto, ato, pessoa, situação/conceito) */
+const GRUPOS=["o","a","p","sc"];
+const cartaB=id=>h.brancas.find(x=>x.id===id);
+function comprarB(m){
+  if(!h.monteB.length){h.monteB=embaralha(h.usadasB);h.usadasB=[];}
+  if(!m||!h.monteB.length) return h.monteB.shift();
+  const tem=g=>m.filter(id=>{const c=cartaB(id);return c&&c.tp&&g.indexOf(c.tp[0])>=0;}).length;
+  const falta=GRUPOS.slice().sort((x,y)=>tem(x)-tem(y)||Math.random()-.5)[0];
+  const j=h.monteB.slice(0,12).findIndex(id=>{const c=cartaB(id);return c&&c.tp&&[...c.tp].some(l=>falta.indexOf(l)>=0);});
+  return h.monteB.splice(j>0?j:0,1)[0];
+}
 function comprarP(){ if(!h.monteP.length){h.monteP=embaralha(h.usadasP);h.usadasP=[];} return h.monteP.shift(); }
 function contarCartas(){
-  const n=k=>k==="T"?(h.turmaB.split(/\n/).filter(s=>s.trim()).length):window.BARALHO.brancas.filter(l=>l[0]===k).length;
-  const p=k=>k==="T"?(h.turmaP.split(/\n/).filter(s=>s.trim()).length):window.BARALHO.pretas.filter(l=>l[0]===k).length;
+  const n=k=>k==="T"?(h.turmaB.split(/\n/).filter(s=>s.trim()).length):window.BARALHO.brancas.filter(l=>ler(l).nv===k).length;
+  const p=k=>k==="T"?(h.turmaP.split(/\n/).filter(s=>s.trim()).length):window.BARALHO.pretas.filter(l=>ler(l).nv===k).length;
   let b=0,q=0; Object.keys(NIVEIS).forEach(k=>{if(h.niveis[k]){b+=n(k);q+=p(k);}}); return {b,q,n,p};
 }
 
@@ -442,7 +658,7 @@ function publicar(){
   if(h.nomes==="aberto"||h.fase==="fim") est.placar=js.map(p=>({id:p.id,nome:p.nome,pts:h.pontos[p.id]||0}));
   if(h.fase==="fim") est.momentos=h.historico.map(x=>({preta:x.preta,ts:x.ts,nome:x.nome}));
   const up={estado:est};
-  Object.keys(h.maos).forEach(pid=>{up["maos/"+pid]=h.maos[pid].map(id=>({id,t:textoB(id)}));});
+  Object.keys(h.maos).forEach(pid=>{up["maos/"+pid]=h.maos[pid].map(id=>{const c=cartaB(id);return {id,t:c?c.t:"",n:c&&c.n||0};});});
   rede.update(base(h.sala),up);
 }
 
@@ -454,7 +670,7 @@ function comecar(){
 }
 function novaRodada(){
   const js=jogadores(), n=(h.r?h.r.n:0)+1;
-  js.forEach(p=>{ h.nomesCache[p.id]=p.nome; const m=h.maos[p.id]||(h.maos[p.id]=[]); while(m.length<MAO){const c=comprarB(); if(!c)break; m.push(c);} });
+  js.forEach(p=>{ h.nomesCache[p.id]=p.nome; const m=h.maos[p.id]||(h.maos[p.id]=[]); while(m.length<MAO){const c=comprarB(m); if(!c)break; m.push(c);} });
   Object.keys(h.maos).forEach(pid=>{ if(!js.find(p=>p.id===pid)){ h.usadasB.push(...h.maos[pid]); delete h.maos[pid]; } });
   let juiz=null;
   if(h.juiz==="rotativo"&&js.length){ h.juizIdx=(h.juizIdx+1)%js.length; juiz=js[h.juizIdx].id; }
@@ -522,7 +738,7 @@ function avancar(){
     if(h.meta&&lider>=h.meta){ h.fase="fim"; salvar(); publicar(); desenhar(); return; }
     if(r.n%TROCA_CADA===0){
       /* completa as mãos antes da troca, para cada um escolher entre 7 */
-      jogadores().forEach(p=>{const m=h.maos[p.id]||(h.maos[p.id]=[]); while(m.length<MAO){const c=comprarB(); if(!c)break; m.push(c);}});
+      jogadores().forEach(p=>{const m=h.maos[p.id]||(h.maos[p.id]=[]); while(m.length<MAO){const c=comprarB(m); if(!c)break; m.push(c);}});
       r.etapa="troca"; r.prontos={}; salvar(); publicar(); desenhar(); return;
     }
     novaRodada(); desenhar();
@@ -534,7 +750,7 @@ function aplicarTroca(){
   jogadores().forEach(p=>{
     const m=h.maos[p.id]||[], ids=arr(tr[p.id]&&tr[p.id].ids).filter(id=>m.indexOf(id)>=0).slice(0,TROCA_MAX);
     ids.forEach(id=>{ m.splice(m.indexOf(id),1); devolver.push(id); });
-    while(m.length<MAO){const c=comprarB(); if(!c)break; m.push(c);}
+    while(m.length<MAO){const c=comprarB(m); if(!c)break; m.push(c);}
   });
   h.monteB.push(...devolver);
   novaRodada(); desenhar();
@@ -569,6 +785,7 @@ function telaConfig(){
   '<section class="ajustes"><div class="bloco"><p class="rotulo">Perguntas da turma</p><textarea id="turmaP" placeholder="Uma por linha. Use ___ para a lacuna. Ex.: O Thiago foi visto ___ no banheiro da firma.">'+esc(h.turmaP)+'</textarea></div>'+
     '<div class="bloco"><p class="rotulo">Respostas da turma</p><textarea id="turmaB" placeholder="Uma por linha. Ex.: O churrasco que o Harvey prometeu em 2019.">'+esc(h.turmaB)+'</textarea></div></section>'+
   '<p class="nota">As cartas da turma ficam salvas só neste aparelho e entram no nível "Da turma".</p>'+
+  '<p class="nota">Sem a turma hoje? <a href="solo.html" style="color:var(--quente);font-weight:800">Jogue o modo solo</a>, contra três bots.</p>'+
   '<section class="acoes"><button class="btn" data-a="comecar"'+(pode?"":" disabled")+'>Distribuir as cartas</button>'+(js.length<3?'<span class="nota">Faltam '+(3-js.length)+' para começar.</span>':'')+
     '<button class="btn sec mini" data-a="nova-sala">Abrir outra sala</button></section>'+
   '</main>';
@@ -697,7 +914,7 @@ function corpoFone(s,est){
     const txt=id=>{const c=mao.find(x=>x.id===id);return c?c.t:"";};
     return preta+
       '<section class="bloco"><p class="rotulo">'+(pret.lac>1?"Escolha "+pret.lac+" cartas, na ordem":"Escolha sua carta")+'</p><div class="mao">'+mao.map(c=>{const i=escolha.indexOf(c.id);
-        return '<button class="carta-mao" data-a="pegar" data-id="'+c.id+'" aria-pressed="'+(i>=0)+'">'+esc(c.t)+(i>=0&&pret.lac>1?'<span class="n">'+(i+1)+'</span>':'')+'</button>';}).join("")+'</div>'+
+        return '<button class="carta-mao" data-a="pegar" data-id="'+c.id+'" aria-pressed="'+(i>=0)+'">'+esc(c.t)+(c.n?'<span class="num">#'+c.n+'</span>':'')+(i>=0&&pret.lac>1?'<span class="n">'+(i+1)+'</span>':'')+'</button>';}).join("")+'</div>'+
       (escolha.length?'<p class="rotulo">Vai ficar assim</p><p class="previa">'+preencher(pret.t,escolha.map(txt))+'</p>':'')+
       '<button class="btn largo" data-a="jogar"'+(escolha.length===pret.lac?"":" disabled")+'>Jogar na mesa</button></section>'+pe;
   }
